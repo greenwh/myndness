@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Myndness</title>
+  <script>
+    // GitHub Pages SPA redirect hack
+    // Redirects 404s to the main app with the path preserved
+    const path = window.location.pathname;
+    const base = '/myndness';
+    if (path.startsWith(base)) {
+      sessionStorage.redirect = path;
+      window.location.replace(base + '/');
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>

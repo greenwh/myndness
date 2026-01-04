@@ -10,10 +10,15 @@ const config = {
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',
-			fallback: 'index.html', // SPA fallback for client-side routing
+			fallback: '200.html', // SPA fallback
 			precompress: false,
 			strict: true
-		})
+		}),
+		paths: {
+			// Set base path for GitHub Pages (repo name)
+			// Comment out for custom domain or local dev
+			base: process.env.NODE_ENV === 'production' ? '/myndness' : ''
+		}
 	}
 };
 

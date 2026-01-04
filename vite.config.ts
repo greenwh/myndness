@@ -18,8 +18,8 @@ export default defineConfig({
 				background_color: '#fafaf9',
 				display: 'standalone',
 				orientation: 'portrait',
-				scope: '/',
-				start_url: '/',
+				scope: '/myndness/',
+				start_url: '/myndness/',
 				categories: ['health', 'lifestyle', 'medical'],
 				icons: [
 					{
