@@ -24,16 +24,16 @@
 	let plannedActivities = $state<PlannedActivity[]>([]);
 	let isLoading = $state(true);
 
-	// Computed summaries
+	// Computed summaries (use toSorted to avoid mutating $state)
 	const latestMood = $derived(
 		moodLogs.length > 0
-			? moodLogs.sort((a, b) => b.timestamp.localeCompare(a.timestamp))[0]
+			? moodLogs.toSorted((a, b) => b.timestamp.localeCompare(a.timestamp))[0]
 			: null
 	);
 
 	const latestBP = $derived(
 		bpReadings.length > 0
-			? bpReadings.sort((a, b) => b.timestamp.localeCompare(a.timestamp))[0]
+			? bpReadings.toSorted((a, b) => b.timestamp.localeCompare(a.timestamp))[0]
 			: null
 	);
 
