@@ -1,38 +1,66 @@
-# sv
+# Myndness
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A personal mental wellness Progressive Web App designed for managing ADHD, GAD, and MDD symptoms through evidence-based interventions.
 
-## Creating a project
+**Live**: https://greenwh.github.io/myndness/
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
 
-```sh
-# create a new project in the current directory
-npx sv create
+### Crisis Tools (Phase 1)
+- **4-7-8 Breathing Timer** - Animated breathing exercise with audio cues
+- **5-4-3-2-1 Grounding** - Sensory grounding technique for acute anxiety
+- **Floating Crisis Button** - Always-accessible red button on every screen
 
-# create a new project in my-app
-npx sv create my-app
-```
+### Core Tracking (Phase 2)
+- **Mood Logger** - Track mood (1-10) and anxiety (0-10) with notes
+- **BP Logger** - Blood pressure tracking with anxiety correlation flag
+- **Dashboard** - Today's entries at a glance
 
-## Developing
+### Behavioral Activation (Phase 3)
+- **Activity Library** - 30 pre-seeded activities across 6 categories
+- **Daily Planner** - Morning/afternoon/evening time blocks
+- **Completion Tracking** - Enjoyment and mastery ratings
+- **Progress Visualization** - Circular completion ring
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Coming Soon
+- Phase 4: CBT Tools (thought records, cognitive distortions)
+- Phase 5: Mindfulness (breath awareness, body scan)
+- Phase 6: Insights & Reporting (charts, PDF export)
 
-```sh
+## Technology
+
+- **Framework**: SvelteKit 2 with Svelte 5
+- **Styling**: Tailwind CSS
+- **Storage**: IndexedDB via Dexie.js (fully offline)
+- **PWA**: Installable, works offline
+- **Deployment**: GitHub Pages
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
 npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
+# Build for production
 npm run build
+
+# Preview production build
+npm run preview
 ```
 
-You can preview the production build with `npm run preview`.
+**Note**: Access dev/preview at `localhost:PORT/myndness/` (base path required)
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Design Principles
+
+- **Accessibility First** - 44px touch targets, 16px+ fonts, WCAG AA contrast
+- **ADHD-Friendly** - One task per screen, auto-save everything
+- **No Guilt Language** - Neutral, factual tone
+- **Offline-First** - All data stored locally in IndexedDB
+- **Privacy** - No analytics, no cloud sync, all data stays on device
+
+## License
+
+Private project - not for redistribution.
