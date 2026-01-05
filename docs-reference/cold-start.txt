@@ -1,0 +1,30 @@
+ Continue development on /mnt/d/Development/myndness - a mental wellness PWA. Check docs-reference/ for architecture docs and the plan file.
+
+  Key Files to Reference
+
+  | File                                                    | Purpose                                  |
+  |---------------------------------------------------------|------------------------------------------|
+  | docs-reference/mental_wellness_architecture_analysis.md | Full clinical context & design rationale |
+  | docs-reference/IMPLEMENTATION_GUIDE.md                  | Phased implementation plan               |
+  | /home/dad/.claude/plans/eager-popping-manatee.md        | Session 1 plan (completed)               |
+
+  What's Done (Phase 0-1)
+
+  - ✅ SvelteKit PWA scaffold
+  - ✅ 4-7-8 Breathing Timer with audio cues
+  - ✅ Navigation + floating crisis button
+  - ✅ GitHub Pages deployment configured
+  - ✅ Database types & Dexie setup (not yet wired to UI)
+
+  What's Next (Phase 2)
+
+  - Mood logger (1-10 mood + 0-10 anxiety sliders)
+  - BP logger (systolic/diastolic + anxiety flag)
+  - Wire up IndexedDB to save/retrieve data
+  - Dashboard showing today's entries
+
+  Important Context
+
+  - User profile: 64yo male, ADHD-Inattentive, GAD, MDD, mild OCD, has pacemaker
+  - Design rules: 44px touch targets, no guilt language, one task per screen, auto-save everything
+  - Live URL: https://greenwh.github.io/myndness/
