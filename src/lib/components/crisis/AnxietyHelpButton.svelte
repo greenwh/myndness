@@ -4,13 +4,13 @@
 </script>
 
 <a
-	href="/tools/breathing"
+	href="/crisis"
 	class="fixed right-4 bottom-24 z-crisis flex items-center justify-center
 		   w-16 h-16 rounded-full bg-danger-500 text-white shadow-lg
 		   hover:bg-danger-600 active:bg-danger-700
 		   focus:outline-none focus-visible:ring-4 focus-visible:ring-danger-300
 		   transition-all duration-200 hover:scale-105"
-	aria-label="Need help with anxiety? Start breathing exercise"
+	aria-label="Need help with anxiety? Access crisis tools"
 >
 	<!-- Calm breath icon -->
 	<svg

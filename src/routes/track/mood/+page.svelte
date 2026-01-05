@@ -1,3 +1,19 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import MoodLogger from '$lib/components/mood/MoodLogger.svelte';
+	import type { MoodLog } from '$lib/db/types';
+
+	let saved = $state(false);
+
+	function handleSaved(entry: MoodLog) {
+		saved = true;
+	}
+
+	function handleDone() {
+		goto('/');
+	}
+</script>
+
 <svelte:head>
 	<title>Log Mood - Myndness</title>
 </svelte:head>
@@ -8,11 +24,18 @@
 		<p class="text-gray-600">How are you feeling right now?</p>
 	</header>
 
-	<div class="card p-8 text-center">
-		<p class="text-gray-500">Mood logging coming soon.</p>
-	</div>
+	<MoodLogger onSaved={handleSaved} />
 
-	<a href="/" class="text-sm text-gray-500 hover:text-gray-700">
+	<!-- Done button -->
+	{#if saved}
+		<div class="pt-4">
+			<button onclick={handleDone} class="btn-primary w-full">
+				Done
+			</button>
+		</div>
+	{/if}
+
+	<a href="/" class="inline-block text-sm text-gray-500 hover:text-gray-700">
 		← Back to home
 	</a>
 </div>

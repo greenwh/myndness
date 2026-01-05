@@ -6,15 +6,20 @@
   <script>
     // GitHub Pages SPA redirect hack
     // Redirects 404s to the main app with the path preserved
-    const path = window.location.pathname;
-    const base = '/myndness';
-    if (path.startsWith(base)) {
-      sessionStorage.redirect = path;
-      window.location.replace(base + '/');
-    }
+    (function() {
+      const path = window.location.pathname;
+      const base = '/myndness';
+      if (path.startsWith(base)) {
+        sessionStorage.setItem('redirect', path);
+        window.location.replace(base + '/');
+      }
+    })();
   </script>
 </head>
 <body>
+  <noscript>
+    <meta http-equiv="refresh" content="0;URL='/myndness/'">
+  </noscript>
   <p>Redirecting...</p>
 </body>
 </html>
