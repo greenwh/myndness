@@ -33,7 +33,7 @@
 		{ value: 'pleasure', label: 'Pleasure' }
 	];
 
-	// Filtered activities
+	// Filtered activities (use toSorted to avoid mutating $state)
 	const filteredActivities = $derived(() => {
 		let result = activities;
 
@@ -53,7 +53,8 @@
 		}
 
 		// Sort: most used first, then alphabetically
-		return result.sort((a, b) => {
+		// Use toSorted() to avoid mutating when no filters applied
+		return result.toSorted((a, b) => {
 			if (b.timesCompleted !== a.timesCompleted) {
 				return b.timesCompleted - a.timesCompleted;
 			}
