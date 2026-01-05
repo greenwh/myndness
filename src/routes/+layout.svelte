@@ -6,12 +6,17 @@
 	import '../app.css';
 	import Navigation from '$lib/components/common/Navigation.svelte';
 	import AnxietyHelpButton from '$lib/components/crisis/AnxietyHelpButton.svelte';
+	import { initializeDatabase } from '$lib/db';
 
 	let { children } = $props();
 
-	// Handle GitHub Pages SPA redirect
-	onMount(() => {
+	// Handle GitHub Pages SPA redirect and initialize database
+	onMount(async () => {
 		if (browser) {
+			// Initialize database (seeds activity library on first run)
+			await initializeDatabase();
+
+			// Handle SPA redirect from 404.html
 			const redirect = sessionStorage.getItem('redirect');
 			if (redirect) {
 				sessionStorage.removeItem('redirect');
