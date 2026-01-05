@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import MoodLogger from '$lib/components/mood/MoodLogger.svelte';
 	import type { MoodLog } from '$lib/db/types';
 
@@ -35,7 +36,7 @@
 		</div>
 	{/if}
 
-	<a href="/" class="inline-block text-sm text-gray-500 hover:text-gray-700">
+	<a href="{base}/" class="inline-block text-sm text-gray-500 hover:text-gray-700">
 		← Back to home
 	</a>
 </div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	// Track hub page - links to all tracking features
 </script>
 
@@ -14,7 +15,7 @@
 
 	<div class="grid gap-4">
 		<!-- Mood Logging -->
-		<a href="/track/mood" class="card card-hover p-4">
+		<a href="{base}/track/mood" class="card card-hover p-4">
 			<div class="flex items-center gap-4">
 				<div class="w-12 h-12 rounded-full bg-success-100 flex items-center justify-center flex-shrink-0">
 					<svg class="w-6 h-6 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +38,7 @@
 		</a>
 
 		<!-- BP Logging -->
-		<a href="/track/bp" class="card card-hover p-4">
+		<a href="{base}/track/bp" class="card card-hover p-4">
 			<div class="flex items-center gap-4">
 				<div class="w-12 h-12 rounded-full bg-danger-100 flex items-center justify-center flex-shrink-0">
 					<svg class="w-6 h-6 text-danger-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

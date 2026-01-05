@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import BreathingTimer from '$lib/components/breathing/BreathingTimer.svelte';
 
 	// State for post-exercise check-in
@@ -11,11 +12,11 @@
 
 	function handleExit() {
 		// User chose to exit early - that's totally fine!
-		goto('/');
+		goto(base + '/');
 	}
 
 	function handleFeelingBetter() {
-		goto('/');
+		goto(base + '/');
 	}
 
 	function handleTryAgain() {
@@ -72,7 +73,7 @@
 				<button onclick={handleTryAgain} class="btn-secondary">
 					I'd like to do more
 				</button>
-				<a href="/tools" class="btn-ghost">
+				<a href="{base}/tools" class="btn-ghost">
 					Try something else
 				</a>
 			</div>
@@ -81,7 +82,7 @@
 
 	<!-- Back link -->
 	<div class="mt-6">
-		<a href="/" class="text-sm text-gray-500 hover:text-gray-700">
+		<a href="{base}/" class="text-sm text-gray-500 hover:text-gray-700">
 			← Back to home
 		</a>
 	</div>

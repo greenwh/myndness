@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	// Floating crisis button - always accessible
 	// Positioned above the navigation bar
 </script>
 
 <a
-	href="/crisis"
+	href="{base}/crisis"
 	class="fixed right-4 bottom-24 z-crisis flex items-center justify-center
 		   w-16 h-16 rounded-full bg-danger-500 text-white shadow-lg
 		   hover:bg-danger-600 active:bg-danger-700

@@ -8,6 +8,7 @@
 	 */
 
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import BreathingTimer from '$lib/components/breathing/BreathingTimer.svelte';
 	import Grounding54321 from '$lib/components/grounding/Grounding54321.svelte';
 
@@ -49,7 +50,7 @@
 	}
 
 	function handleDone() {
-		goto('/');
+		goto(base + '/');
 	}
 
 	function goBack() {
@@ -58,7 +59,7 @@
 		} else if (stage === 'breathing-done') {
 			stage = 'select';
 		} else {
-			goto('/');
+			goto(base + '/');
 		}
 	}
 </script>
@@ -138,7 +139,7 @@
 
 		<!-- Back link -->
 		<div class="text-center mt-6">
-			<a href="/" class="text-sm text-gray-500 hover:text-gray-700">
+			<a href="{base}/" class="text-sm text-gray-500 hover:text-gray-700">
 				← Back to home
 			</a>
 		</div>

@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 
 	// Navigation items - simplified for MVP
 	const navItems = [
-		{ href: '/', label: 'Home', icon: 'home' },
+		{ href: '', label: 'Home', icon: 'home' },
 		{ href: '/track', label: 'Track', icon: 'chart' },
 		{ href: '/tools', label: 'Tools', icon: 'tools' },
 		{ href: '/plan', label: 'Plan', icon: 'calendar' },
@@ -26,10 +27,11 @@
 <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-bottom z-50">
 	<div class="flex justify-around items-center h-16 max-w-lg mx-auto">
 		{#each navItems as item}
-			{@const isActive = $page.url.pathname === item.href ||
-				(item.href !== '/' && $page.url.pathname.startsWith(item.href))}
+			{@const fullHref = base + item.href}
+			{@const isActive = $page.url.pathname === fullHref ||
+				(item.href !== '' && $page.url.pathname.startsWith(fullHref))}
 			<a
-				href={item.href}
+				href={fullHref || base + '/'}
 				class="nav-item flex-1 {isActive ? 'nav-item-active' : ''}"
 				aria-current={isActive ? 'page' : undefined}
 			>

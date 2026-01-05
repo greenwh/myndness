@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import { base } from '$app/paths';
 	import { format } from 'date-fns';
 	import { db, getTodaysMoodLogs } from '$lib/db';
 	import type { MoodLog, BPReading } from '$lib/db/types';
@@ -87,7 +88,7 @@
 		<h2 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Quick Actions</h2>
 		<div class="grid grid-cols-2 gap-3">
 			<a
-				href="/tools/breathing"
+				href="{base}/tools/breathing"
 				class="card card-hover p-4 flex flex-col items-center text-center"
 			>
 				<div
@@ -107,7 +108,7 @@
 			</a>
 
 			<a
-				href="/track/mood"
+				href="{base}/track/mood"
 				class="card card-hover p-4 flex flex-col items-center text-center"
 			>
 				<div
@@ -169,7 +170,7 @@
 								</div>
 								<p class="text-xs text-gray-500">{formatTime(latestMood.timestamp)}</p>
 							</div>
-							<a href="/track/mood" class="text-sm text-primary-600 hover:text-primary-700">
+							<a href="{base}/track/mood" class="text-sm text-primary-600 hover:text-primary-700">
 								Update
 							</a>
 						</div>
@@ -217,7 +218,7 @@
 									{/if}
 								</p>
 							</div>
-							<a href="/track/bp" class="text-sm text-primary-600 hover:text-primary-700">
+							<a href="{base}/track/bp" class="text-sm text-primary-600 hover:text-primary-700">
 								New
 							</a>
 						</div>
@@ -235,8 +236,8 @@
 					Start tracking to see your daily summary here.
 				</p>
 				<div class="flex justify-center gap-2 mt-3">
-					<a href="/track/mood" class="btn-secondary text-sm py-2 px-4">Log Mood</a>
-					<a href="/track/bp" class="btn-secondary text-sm py-2 px-4">Log BP</a>
+					<a href="{base}/track/mood" class="btn-secondary text-sm py-2 px-4">Log Mood</a>
+					<a href="{base}/track/bp" class="btn-secondary text-sm py-2 px-4">Log BP</a>
 				</div>
 			</div>
 		{/if}

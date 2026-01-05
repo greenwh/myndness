@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import BPLogger from '$lib/components/bp/BPLogger.svelte';
 	import type { BPReading } from '$lib/db/types';
 
@@ -20,7 +21,7 @@
 
 	<BPLogger onSaved={handleSaved} />
 
-	<a href="/" class="inline-block text-sm text-gray-500 hover:text-gray-700">
+	<a href="{base}/" class="inline-block text-sm text-gray-500 hover:text-gray-700">
 		← Back to home
 	</a>
 </div>

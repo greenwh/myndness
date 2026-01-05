@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import Grounding54321 from '$lib/components/grounding/Grounding54321.svelte';
 
 	function handleComplete() {
-		goto('/');
+		goto(base + '/');
 	}
 
 	function handleExit() {
-		goto('/');
+		goto(base + '/');
 	}
 </script>
 
@@ -31,7 +32,7 @@
 
 	<!-- Back link -->
 	<div class="text-center mt-6">
-		<a href="/" class="text-sm text-gray-500 hover:text-gray-700">
+		<a href="{base}/" class="text-sm text-gray-500 hover:text-gray-700">
 			← Back to home
 		</a>
 	</div>

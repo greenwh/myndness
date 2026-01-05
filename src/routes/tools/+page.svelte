@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	// Tools hub page - quick access to all intervention tools
 </script>
 
@@ -14,7 +15,7 @@
 
 	<div class="grid gap-4">
 		<!-- Breathing Exercises -->
-		<a href="/tools/breathing" class="card card-hover p-4">
+		<a href="{base}/tools/breathing" class="card card-hover p-4">
 			<div class="flex items-center gap-4">
 				<div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
 					<svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +38,7 @@
 		</a>
 
 		<!-- Grounding Exercise -->
-		<a href="/tools/grounding" class="card card-hover p-4">
+		<a href="{base}/tools/grounding" class="card card-hover p-4">
 			<div class="flex items-center gap-4">
 				<div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
 					<span class="text-2xl" aria-hidden="true">🌿</span>
