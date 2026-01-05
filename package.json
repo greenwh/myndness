@@ -4,6 +4,9 @@
 	"version": "0.1.0",
 	"description": "Mental Wellness Companion PWA - Evidence-based interventions for anxiety, depression, and wellness",
 	"type": "module",
+	"overrides": {
+		"picomatch": "^4.0.2"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
