@@ -4,10 +4,11 @@
 	import { base } from '$app/paths';
 	import { format } from 'date-fns';
 	import { db, getTodaysMoodLogs } from '$lib/db';
-	import type { MoodLog, BPReading } from '$lib/db/types';
+	import type { MoodLog, BPReading, PlannedActivity } from '$lib/db/types';
 
 	// Get current date info
 	const today = new Date();
+	const todayStr = today.toISOString().split('T')[0];
 	const greeting = getGreeting();
 
 	function getGreeting(): string {
@@ -20,6 +21,7 @@
 	// Today's data
 	let moodLogs = $state<MoodLog[]>([]);
 	let bpReadings = $state<BPReading[]>([]);
+	let plannedActivities = $state<PlannedActivity[]>([]);
 	let isLoading = $state(true);
 
 	// Computed summaries
@@ -37,24 +39,64 @@
 
 	const hasEntries = $derived(moodLogs.length > 0 || bpReadings.length > 0);
 
+	// Activity stats
+	const activityStats = $derived({
+		total: plannedActivities.length,
+		completed: plannedActivities.filter((a) => a.completed).length,
+		rate: plannedActivities.length > 0
+			? Math.round((plannedActivities.filter((a) => a.completed).length / plannedActivities.length) * 100)
+			: 0
+	});
+
+	// Next uncompleted activity
+	const nextActivity = $derived(() => {
+		const hour = today.getHours();
+		const currentBlock = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
+		const order = ['morning', 'afternoon', 'evening'];
+		const startIndex = order.indexOf(currentBlock);
+
+		for (let i = 0; i < 3; i++) {
+			const block = order[(startIndex + i) % 3];
+			const uncompleted = plannedActivities.find((a) => a.timeBlock === block && !a.completed);
+			if (uncompleted) return uncompleted;
+		}
+		return null;
+	});
+
 	// Load today's data
 	onMount(async () => {
 		if (!browser) return;
 
 		try {
-			const todayStr = today.toISOString().split('T')[0];
-
 			// Load mood logs
 			moodLogs = await db.moodLogs.where('date').equals(todayStr).toArray();
 
 			// Load BP readings
 			bpReadings = await db.bpReadings.where('date').equals(todayStr).toArray();
+
+			// Load planned activities
+			plannedActivities = await db.plannedActivities.where('date').equals(todayStr).toArray();
 		} catch (error) {
 			console.error('Failed to load today\'s data:', error);
 		} finally {
 			isLoading = false;
 		}
 	});
+
+	// Quick complete an activity
+	async function quickComplete(id: number) {
+		try {
+			await db.plannedActivities.update(id, {
+				completed: true,
+				completedAt: new Date().toISOString()
+			});
+			plannedActivities = plannedActivities.map((a) =>
+				a.id === id ? { ...a, completed: true } : a
+			);
+		} catch (error) {
+			console.error('Failed to complete activity:', error);
+		}
+	}
 
 	// Helper to format time
 	function formatTime(timestamp: string): string {
@@ -129,9 +171,92 @@
 		</div>
 	</section>
 
+	<!-- Today's Activities -->
+	{#if !isLoading}
+		<section class="space-y-3">
+			<div class="flex items-center justify-between">
+				<h2 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Today's Activities</h2>
+				<a href="{base}/plan/today" class="text-sm text-primary-600 hover:text-primary-700">
+					{plannedActivities.length > 0 ? 'View all' : 'Plan'}
+				</a>
+			</div>
+
+			{#if plannedActivities.length === 0}
+				<a
+					href="{base}/plan/today"
+					class="block card p-4 text-center border-2 border-dashed border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-colors"
+				>
+					<p class="text-gray-500">No activities planned</p>
+					<p class="text-xs text-gray-400 mt-1">Tap to add some</p>
+				</a>
+			{:else}
+				<!-- Progress summary -->
+				<div class="card p-4">
+					<div class="flex items-center gap-4">
+						<div class="w-12 h-12 relative flex-shrink-0">
+							<svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+								<circle
+									cx="18"
+									cy="18"
+									r="15"
+									fill="none"
+									class="stroke-gray-200"
+									stroke-width="3"
+								/>
+								<circle
+									cx="18"
+									cy="18"
+									r="15"
+									fill="none"
+									class="stroke-success-500"
+									stroke-width="3"
+									stroke-linecap="round"
+									stroke-dasharray="{activityStats.rate}, 100"
+								/>
+							</svg>
+							<span class="absolute inset-0 flex items-center justify-center text-xs font-semibold">
+								{activityStats.rate}%
+							</span>
+						</div>
+						<div class="flex-1">
+							<p class="font-medium text-gray-900">
+								{activityStats.completed} of {activityStats.total} completed
+							</p>
+							{#if activityStats.completed === activityStats.total && activityStats.total > 0}
+								<p class="text-sm text-success-600">All done for today</p>
+							{:else if nextActivity()}
+								<p class="text-sm text-gray-500">Next: {nextActivity()?.activity}</p>
+							{/if}
+						</div>
+					</div>
+				</div>
+
+				<!-- Next activity quick action -->
+				{#if nextActivity()}
+					{@const next = nextActivity()}
+					<div class="card p-4 bg-primary-50 border-primary-100">
+						<div class="flex items-center justify-between gap-3">
+							<div class="min-w-0">
+								<p class="text-xs text-primary-600 uppercase font-medium">{next?.timeBlock}</p>
+								<p class="font-medium text-gray-900 truncate">{next?.activity}</p>
+							</div>
+							<button
+								type="button"
+								onclick={() => next?.id && quickComplete(next.id)}
+								class="btn-success py-2 px-4 flex-shrink-0"
+							>
+								Done
+							</button>
+						</div>
+					</div>
+				{/if}
+			{/if}
+		</section>
+	{/if}
+
 	<!-- Today's Status -->
 	<section class="space-y-3">
-		<h2 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Today</h2>
+		<h2 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Tracking</h2>
 
 		{#if isLoading}
 			<div class="card p-4">
