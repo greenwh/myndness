@@ -68,9 +68,8 @@
 
 	// Progress through items one at a time
 	function nextItem() {
-		if (currentItem < count - 1) {
-			currentItem++;
-		} else {
+		currentItem++;
+		if (currentItem >= count) {
 			onComplete();
 		}
 	}
@@ -139,7 +138,7 @@
 			onclick={nextItem}
 			class="btn-primary text-lg px-8 py-4 min-h-[56px]"
 		>
-			{currentItem < count - 1 ? 'Found one - Next' : 'Done with this step'}
+			{currentItem >= count - 1 ? 'Done with this step' : 'Found one - Next'}
 		</button>
 	</div>
 

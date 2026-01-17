@@ -4,6 +4,37 @@
 
 **Start here when resuming development on this project.**
 
+## Model Selection & Complexity Assessment
+
+**Assessment Date:** [2026-01-11]
+**Assessed Model:** Sonnet 4.5
+**Complexity Score:** [5/10]
+
+**Dimension Breakdown:**
+- Data Structure: 7/10
+- State Management: 5/10
+- Integration: 3/10
+- Edge Cases: 6/10
+- Reasoning/Algorithms: 5/10
+
+**Recommended Model:** [Sonnet]
+
+**Assessment Rationale:**
+ **Use Sonnet for myndness development.** This is a mid-complexity project (5/10) with a comprehensive relational data
+  model (17+ entities), strict accessibility requirements (WCAG AA for 64yo user), and clinical context (pacemaker/BP
+  monitoring). The local-only architecture (IndexedDB, no backend) and well-defined type system keep complexity
+  manageable, making Sonnet ideal. Haiku lacks depth for clinical/accessibility requirements; Opus is overkill for local
+   CRUD operations. Phases 4-6 (CBT, mindfulness, reporting) will maintain similar complexity levels.
+
+
+**Key Monitoring Points:**
+  - Accessibility validation: Keyboard navigation, screen reader compatibility (44px targets, focus rings)
+  - Data integrity: Verify linked IDs across tables (moodLogs.linkedBpId → bpReadings.id)
+  - Activity library stats: Rolling averages must update correctly when activities completed/rated
+  - PWA offline behavior: Service worker caching for crisis tools during connectivity loss
+  - Medical data validation: BP range enforcement (50-250 systolic, 30-150 diastolic)
+  - Build/deploy: GitHub Pages base path (/myndness) routing must work for deep links
+  
 ### Quick Context
 - **What**: Mental wellness PWA for managing ADHD, GAD, MDD symptoms
 - **User**: 64yo male with pacemaker, needs accessible design

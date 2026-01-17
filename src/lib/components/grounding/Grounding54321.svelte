@@ -125,13 +125,15 @@
 
 	{:else if stage === 'exercise'}
 		<!-- Exercise steps -->
-		<GroundingStep
-			sense={steps[currentStep].sense}
-			count={steps[currentStep].count}
-			stepNumber={currentStep + 1}
-			totalSteps={steps.length}
-			onComplete={handleStepComplete}
-		/>
+		{#key currentStep}
+			<GroundingStep
+				sense={steps[currentStep].sense}
+				count={steps[currentStep].count}
+				stepNumber={currentStep + 1}
+				totalSteps={steps.length}
+				onComplete={handleStepComplete}
+			/>
+		{/key}
 
 		<!-- Exit option -->
 		<div class="text-center mt-4">
