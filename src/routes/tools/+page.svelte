@@ -53,6 +53,22 @@
 			</div>
 		</a>
 
+		<!-- CBT Tools -->
+		<a href="{base}/tools/cbt" class="card card-hover p-4">
+			<div class="flex items-center gap-4">
+				<div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+					<span class="text-2xl" aria-hidden="true">🧠</span>
+				</div>
+				<div class="flex-1">
+					<h2 class="font-semibold text-gray-900">CBT Tools</h2>
+					<p class="text-sm text-gray-600">Challenge unhelpful thinking patterns</p>
+				</div>
+				<svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+				</svg>
+			</div>
+		</a>
+
 		<!-- Mindfulness (coming soon) -->
 		<div class="card p-4 opacity-60">
 			<div class="flex items-center gap-4">

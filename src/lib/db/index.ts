@@ -250,6 +250,71 @@ export async function getIncompleteThoughtRecords(): Promise<ThoughtRecord[]> {
 }
 
 /**
+ * Get thought records for date range
+ */
+export async function getThoughtRecords(startDate: string, endDate: string): Promise<ThoughtRecord[]> {
+  return db.thoughtRecords
+    .where('date')
+    .between(startDate, endDate, true, true)
+    .reverse()
+    .sortBy('timestamp');
+}
+
+/**
+ * Get thought record statistics
+ */
+export async function getThoughtRecordStats(
+  startDate: string,
+  endDate: string
+): Promise<{
+  total: number;
+  completed: number;
+  avgEmotionBefore: number;
+  avgEmotionAfter: number;
+  avgReduction: number;
+  topDistortions: string[];
+}> {
+  const records = await getThoughtRecords(startDate, endDate);
+  const completed = records.filter(r => r.isComplete);
+
+  if (completed.length === 0) {
+    return {
+      total: 0,
+      completed: 0,
+      avgEmotionBefore: 0,
+      avgEmotionAfter: 0,
+      avgReduction: 0,
+      topDistortions: []
+    };
+  }
+
+  const avgBefore = completed.reduce((sum, r) => sum + r.emotionIntensity, 0) / completed.length;
+  const avgAfter = completed.reduce((sum, r) => sum + r.outcomeIntensity, 0) / completed.length;
+
+  // Count distortion frequency
+  const distortionCounts: Record<string, number> = {};
+  completed.forEach(r => {
+    r.distortions.forEach(d => {
+      distortionCounts[d] = (distortionCounts[d] || 0) + 1;
+    });
+  });
+
+  const topDistortions = Object.entries(distortionCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([d]) => d);
+
+  return {
+    total: records.length,
+    completed: completed.length,
+    avgEmotionBefore: Math.round(avgBefore),
+    avgEmotionAfter: Math.round(avgAfter),
+    avgReduction: Math.round(avgBefore - avgAfter),
+    topDistortions
+  };
+}
+
+/**
  * Get mindfulness sessions for date range
  */
 export async function getMindfulnessSessions(startDate: string, endDate: string): Promise<MindfulnessSession[]> {
