@@ -1,5 +1,29 @@
 # Myndness - Mental Wellness PWA
 
+---
+
+## 🚀 **COLD START - READ THIS FIRST**
+
+**Current Status:** Phase 4 Complete (CBT Tools deployed and tested)
+**Next Phase:** Phase 5 - Mindfulness Tools (breath awareness, body scan, session timer)
+**Last Updated:** 2026-01-17
+
+### Quick Resume Instructions
+1. **Check live site**: https://greenwh.github.io/myndness/ (verify Phase 4 CBT tools work)
+2. **Read implementation plan**: `cat docs-reference/IMPLEMENTATION_GUIDE.md` (Phase 5 details)
+3. **Start dev server**: `npm run dev` (access at localhost:5173/myndness/)
+4. **Review user context below** - 64yo with ADHD, GAD, MDD, pacemaker (accessibility critical)
+
+### What Just Got Built (Phase 4)
+✅ **CBT Tools** - Complete thought record system
+- 7-step thought record form with auto-save
+- 14 cognitive distortions checklist
+- Distortions reference guide
+- Thought record history with filters
+- All routes: `/tools/cbt/*`
+
+---
+
 ## Cold Start Instructions
 
 **Start here when resuming development on this project.**
@@ -60,7 +84,7 @@ git add -A && git commit -m "message" && git push origin main
 
 ---
 
-## Project Status (Phases 0-3 Complete)
+## Project Status (Phases 0-4 Complete)
 
 | Phase | Status | Description |
 |-------|--------|-------------|
@@ -68,8 +92,8 @@ git add -A && git commit -m "message" && git push origin main
 | Phase 1 | ✅ | Crisis tools (4-7-8 breathing, 5-4-3-2-1 grounding) |
 | Phase 2 | ✅ | Core tracking (mood, BP, dashboard) |
 | Phase 3 | ✅ | Behavioral Activation (activity planner) |
-| Phase 4 | ❌ | CBT Tools (thought records, distortions) |
-| Phase 5 | ❌ | Mindfulness (breath awareness, body scan) |
+| Phase 4 | ✅ | **CBT Tools (thought records, distortions)** - JUST COMPLETED |
+| Phase 5 | 🔜 | **Mindfulness (breath awareness, body scan)** - NEXT |
 | Phase 6 | ❌ | Insights & Reporting (charts, export) |
 
 ---
@@ -78,18 +102,23 @@ git add -A && git commit -m "message" && git push origin main
 
 ### Routes
 ```
-/                    Dashboard (mood, BP, activities summary)
-/crisis              Crisis flow (breathing → grounding)
-/tools               Tools hub
-/tools/breathing     4-7-8 breathing timer
-/tools/grounding     5-4-3-2-1 grounding exercise
-/track               Track hub
-/track/mood          Mood + anxiety logger
-/track/bp            Blood pressure logger
-/plan                Plan hub (today's progress, week stats)
-/plan/today          Daily activity planner
-/plan/library        Activity library browser
-/settings            Placeholder
+/                           Dashboard (mood, BP, activities summary)
+/crisis                     Crisis flow (breathing → grounding)
+/tools                      Tools hub
+/tools/breathing            4-7-8 breathing timer
+/tools/grounding            5-4-3-2-1 grounding exercise
+/tools/cbt                  CBT tools hub
+/tools/cbt/thought-record   New thought record (7 steps)
+/tools/cbt/thought-record/[id]  Edit existing thought record
+/tools/cbt/history          Thought records list
+/tools/cbt/distortions      Cognitive distortions reference guide
+/track                      Track hub
+/track/mood                 Mood + anxiety logger
+/track/bp                   Blood pressure logger
+/plan                       Plan hub (today's progress, week stats)
+/plan/today                 Daily activity planner
+/plan/library               Activity library browser
+/settings                   Placeholder
 ```
 
 ### Component Structure
@@ -98,7 +127,9 @@ src/lib/components/
 ├── activities/      ActivityCard, ActivityLibrary, ActivityPlanner
 ├── breathing/       BreathingTimer, BreathingCircle
 ├── bp/              BPLogger
-├── common/          Navigation
+├── cbt/             ThoughtRecordForm, ThoughtRecordHistory, DistortionReference
+├── common/          Navigation, ProgressSteps, CharacterCounter, IntensitySlider,
+│                    EmotionSelect, DistortionChecklist
 ├── crisis/          AnxietyHelpButton
 ├── grounding/       Grounding54321, GroundingStep
 └── mood/            MoodLogger, MoodSlider
@@ -107,8 +138,9 @@ src/lib/components/
 ### Database (IndexedDB via Dexie)
 - **Types**: `src/lib/db/types.ts` - All interfaces
 - **DB**: `src/lib/db/index.ts` - Dexie instance + helpers
-- **Active tables**: moodLogs, bpReadings, plannedActivities, activityLibrary
+- **Active tables**: moodLogs, bpReadings, plannedActivities, activityLibrary, thoughtRecords
 - **30 pre-seeded activities** across 6 categories
+- **Query helpers**: getMoodLogs(), getPlannedActivities(), getThoughtRecords(), getThoughtRecordStats()
 
 ---
 
@@ -171,23 +203,52 @@ Background: Military - needs structure
 
 ---
 
-## What's Next (Phase 4: CBT Tools)
+## What's Next (Phase 5: Mindfulness Tools)
 
 ### Components to Build
-1. `ThoughtRecord.svelte` - Multi-step thought record form
-2. `DistortionChecklist.svelte` - 14 cognitive distortions
-3. `BehavioralExperiment.svelte` - Test predictions
-4. `AnxietyHierarchy.svelte` - Exposure ladder
+1. `MindfulnessTimer.svelte` - Configurable meditation timer
+2. `BreathAwareness.svelte` - Guided breath awareness exercise
+3. `BodyScan.svelte` - Progressive body scan (short 5min / full 15min)
+4. `MindfulnessHistory.svelte` - List of past sessions
 
 ### Routes to Create
-- `/tools/cbt` - CBT tools hub
-- `/tools/cbt/thought-record` - New thought record
-- `/tools/cbt/history` - Past thought records
-- `/tools/cbt/distortions` - Reference guide
+- `/tools/mindfulness` - Mindfulness hub
+- `/tools/mindfulness/timer` - Session timer
+- `/tools/mindfulness/breath` - Breath awareness practice
+- `/tools/mindfulness/body-scan` - Body scan meditation
+- `/tools/mindfulness/history` - Session history
 
 ### Database
-- Types already exist in `types.ts` (ThoughtRecord, CognitiveDistortion, etc.)
-- Tables already defined in `index.ts` (thoughtRecords, behavioralExperiments)
+- Types already exist in `types.ts` (MindfulnessSession, MindfulnessPracticeType)
+- Table already defined in `index.ts` (mindfulnessSessions)
+- Query helpers: getMindfulnessSessions(), getMindfulnessMinutes()
+
+### Design Notes
+- **Silent timer** - visual only, no audio (user may be in public)
+- **Flexible duration** - 3, 5, 10, 15, 20 minute options
+- **Exit always available** - can stop anytime without guilt
+- **Mood tracking** - before/after mood/anxiety ratings (optional)
+- **Focus quality** - self-rating of how focused they were (0-10)
+
+---
+
+## Known Issues & Solutions
+
+### IndexedDB + Svelte 5 Proxies
+**Problem**: Svelte 5's `$state()` creates proxy objects that can't be cloned by IndexedDB
+**Error**: `DataCloneError: Failed to execute 'add' on 'IDBObjectStore'`
+**Solution**: Convert proxy arrays to plain arrays before saving:
+```typescript
+// ❌ Don't do this
+await db.table.add({ items: formData.items });
+
+// ✅ Do this instead
+await db.table.add({ items: [...formData.items] });
+```
+
+### Dynamic Routes & Prerendering
+**Problem**: Dynamic routes like `[id]` can't be prerendered (GitHub Pages static site)
+**Solution**: Add `+page.ts` with `export const prerender = false;` to dynamic route folders
 
 ---
 
