@@ -113,15 +113,16 @@
 
 		try {
 			const now = new Date();
+			// Convert Svelte proxy state to plain object for IndexedDB
 			const entry: Omit<ThoughtRecord, 'id'> = {
 				date: now.toISOString().split('T')[0],
 				timestamp: now.toISOString(),
-				situation: formData.situation,
-				automaticThought: formData.automaticThought,
+				situation: formData.situation || '',
+				automaticThought: formData.automaticThought || '',
 				emotion: formData.emotion || 'anxious',
 				emotionOther: formData.emotionOther,
 				emotionIntensity: formData.emotionIntensity || 50,
-				distortions: formData.distortions || [],
+				distortions: [...(formData.distortions || [])], // Convert proxy array to plain array
 				evidenceFor: formData.evidenceFor || '',
 				evidenceAgainst: formData.evidenceAgainst || '',
 				balancedThought: formData.balancedThought || '',
