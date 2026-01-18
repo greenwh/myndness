@@ -17,30 +17,30 @@
         <div class="video-wrapper">
           <iframe
             loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/vwqUMXaU0Hk"
+            src="https://www.youtube-nocookie.com/embed/wCFB8rj0p-8"
             title="5-Minute Tai Chi for Beginners"
             frameborder="0"
             allow="accelerometer; encrypted-media; gyroscope"
             allowfullscreen
           ></iframe>
         </div>
-        <h3 class="video-title">5-Minute Tai Chi for Beginners</h3>
-        <p class="video-description">Simple, gentle morning practice</p>
+        <h3 class="video-title">5-Minute Tai Chi Flow</h3>
+        <p class="video-description">Simple morning practice for beginners</p>
       </div>
 
       <div class="video-card">
         <div class="video-wrapper">
           <iframe
             loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/w8y5l8I5Phs"
-            title="10-Minute Tai Chi for Energy"
+            src="https://www.youtube-nocookie.com/embed/6w05yOw0GbI"
+            title="10-Minute Gentle Tai Chi"
             frameborder="0"
             allow="accelerometer; encrypted-media; gyroscope"
             allowfullscreen
           ></iframe>
         </div>
-        <h3 class="video-title">10-Minute Morning Flow</h3>
-        <p class="video-description">Energizing yet gentle practice</p>
+        <h3 class="video-title">10-Minute Gentle Tai Chi</h3>
+        <p class="video-description">Easy morning movements</p>
       </div>
     </div>
   </section>
@@ -76,7 +76,7 @@
         <div class="video-wrapper">
           <iframe
             loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/S6xW8zMqtYk"
+            src="https://www.youtube-nocookie.com/embed/eLE2xLDubP4"
             title="Seated Tai Chi"
             frameborder="0"
             allow="accelerometer; encrypted-media; gyroscope"
@@ -91,7 +91,7 @@
         <div class="video-wrapper">
           <iframe
             loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/cP26mr5Y3zE"
+            src="https://www.youtube-nocookie.com/embed/vX3zD5pLudo"
             title="Chair Tai Chi for Seniors"
             frameborder="0"
             allow="accelerometer; encrypted-media; gyroscope"
@@ -113,7 +113,7 @@
         <div class="video-wrapper">
           <iframe
             loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/Yc7T2s_DdVg"
+            src="https://www.youtube-nocookie.com/embed/DnjzKUpleDs"
             title="Tai Chi for Balance"
             frameborder="0"
             allow="accelerometer; encrypted-media; gyroscope"

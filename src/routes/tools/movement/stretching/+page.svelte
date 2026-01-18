@@ -54,7 +54,7 @@
         <div class="video-wrapper">
           <iframe
             loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/X3-gKPNyrTA"
+            src="https://www.youtube-nocookie.com/embed/t7FlZhLPMO0"
             title="Neck and Shoulder Stretches"
             frameborder="0"
             allow="accelerometer; encrypted-media; gyroscope"
@@ -69,7 +69,7 @@
         <div class="video-wrapper">
           <iframe
             loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/Uj0bhZZh3xo"
+            src="https://www.youtube-nocookie.com/embed/akgQPjE-ZRE"
             title="Upper Back Stretches"
             frameborder="0"
             allow="accelerometer; encrypted-media; gyroscope"
@@ -91,7 +91,7 @@
         <div class="video-wrapper">
           <iframe
             loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/4BOTvaRaDjI"
+            src="https://www.youtube-nocookie.com/embed/iN-FPh7r1yg"
             title="Lower Back Stretches"
             frameborder="0"
             allow="accelerometer; encrypted-media; gyroscope"
@@ -106,7 +106,7 @@
         <div class="video-wrapper">
           <iframe
             loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/1vM4XX3RbLk"
+            src="https://www.youtube-nocookie.com/embed/qULTwquOuT4"
             title="Leg Stretches for Flexibility"
             frameborder="0"
             allow="accelerometer; encrypted-media; gyroscope"
