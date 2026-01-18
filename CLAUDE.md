@@ -325,6 +325,44 @@ Phase 7 focuses on gentle movement resources and final app polish. This phase pr
 
 ---
 
+## Future Enhancements (Post-Phase 7)
+
+The following features have placeholder UI ("Coming Soon") but are **NOT part of Phase 7**. They are designed in `db/types.ts` but not yet implemented. Consider these for Phase 8 or beyond:
+
+### Advanced CBT Tools (Phase 8 candidate)
+1. **Behavioral Experiments** (`/tools/cbt/experiment`):
+   - Test beliefs with real-world experiments
+   - Interface exists in `db/types.ts` as `BehavioralExperiment`
+   - Tracks hypothesis → experiment → outcome → revised belief
+   - Links to planned activities for execution
+
+2. **Anxiety Hierarchy** (`/tools/cbt/hierarchy`):
+   - Build exposure ladder to gradually face fears
+   - Interface exists in `db/types.ts` as `AnxietyHierarchyItem`
+   - Tracks SUDS ratings (0-100) before/during/after exposures
+   - Progressive desensitization approach
+
+### Additional Features (Future)
+3. **Activities on Track Page**:
+   - Currently shows "Coming Soon"
+   - Unclear if this is duplicate of Plan page or different feature
+   - May track completed activities separate from planned activities
+   - Needs requirement clarification
+
+4. **Anxiety Episodes Tracking**:
+   - Interface exists in `db/types.ts` as `AnxietyEpisode`
+   - Detailed episode logging with symptoms, interventions, BP correlation
+   - Duration tracking, peak anxiety level, effectiveness ratings
+   - Currently not accessible from UI
+
+5. **Enhanced Settings**:
+   - Will be partially implemented in Phase 7
+   - Advanced features (backup frequency, weekly goals) for later
+
+**Decision**: Focus Phase 7 on movement, onboarding, help, and accessibility audit. Advanced CBT tools (experiments, hierarchy) can be Phase 8 if needed.
+
+---
+
 ## Known Issues & Solutions
 
 ### IndexedDB + Svelte 5 Proxies
