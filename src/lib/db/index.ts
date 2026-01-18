@@ -85,11 +85,23 @@ export async function initializeDatabase(): Promise<void> {
   if (activityCount === 0) {
     await seedActivityLibrary();
   }
-  
+
   // Check if settings exist and create defaults
   const settingsCount = await db.settings.count();
   if (settingsCount === 0) {
     await createDefaultSettings();
+  }
+
+  // Ensure user profile exists
+  const profileCount = await db.userProfile.count();
+  if (profileCount === 0) {
+    await db.userProfile.add({
+      hasPacemaker: false,
+      hasCardiacMonitor: false,
+      onboardingCompleted: false,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    });
   }
 }
 
@@ -349,6 +361,46 @@ export async function updateSettings(updates: Partial<Settings>): Promise<void> 
  */
 export async function getUserProfile(): Promise<UserProfile | undefined> {
   return db.userProfile.toCollection().first();
+}
+
+/**
+ * Update user profile (create if doesn't exist)
+ */
+export async function updateUserProfile(updates: Partial<UserProfile>): Promise<void> {
+  const profile = await getUserProfile();
+
+  if (profile?.id) {
+    await db.userProfile.update(profile.id, {
+      ...updates,
+      updatedAt: new Date().toISOString()
+    });
+  } else {
+    await db.userProfile.add({
+      ...updates,
+      hasPacemaker: updates.hasPacemaker ?? false,
+      hasCardiacMonitor: updates.hasCardiacMonitor ?? false,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    });
+  }
+}
+
+/**
+ * Mark onboarding as completed
+ */
+export async function completeOnboarding(): Promise<void> {
+  await updateUserProfile({
+    onboardingCompleted: true,
+    onboardingCompletedAt: new Date().toISOString()
+  });
+}
+
+/**
+ * Check if onboarding is needed
+ */
+export async function needsOnboarding(): Promise<boolean> {
+  const profile = await getUserProfile();
+  return !profile?.onboardingCompleted && !profile?.onboardingSkipped;
 }
 
 // ============================================

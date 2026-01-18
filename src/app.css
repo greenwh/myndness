@@ -48,9 +48,20 @@
   --radius-full: 9999px;
 }
 
-/* Dark mode (if implemented later) */
+/* Dark mode */
+:root.dark-mode {
+  --color-bg: #18181b;
+  --color-bg-card: #27272a;
+  --color-bg-elevated: #3f3f46;
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #71717a;
+  --color-border: #3f3f46;
+}
+
+/* System dark mode preference */
 @media (prefers-color-scheme: dark) {
-  :root.dark-mode {
+  :root:not(.dark-mode):not([class*="dark"]) {
     --color-bg: #18181b;
     --color-bg-card: #27272a;
     --color-bg-elevated: #3f3f46;
@@ -435,10 +446,24 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   .breathing-circle {
     transition: none !important;
   }
+}
+
+/* Manual reduced motion class (from settings) */
+:root.reduce-motion *,
+:root.reduce-motion *::before,
+:root.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+:root.reduce-motion .breathing-circle {
+  transition: none !important;
 }
 
 /* ============================================

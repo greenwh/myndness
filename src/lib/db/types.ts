@@ -368,26 +368,31 @@ export type MindfulnessPracticeType =
 
 export interface UserProfile {
   id?: number;
-  
+
   // Demographics
   name?: string;                   // Optional
   age?: number;
-  
+
   // Medical context
   conditions?: string[];           // List of conditions
   medications?: string[];          // Current medications
   hasPacemaker: boolean;
   hasCardiacMonitor: boolean;
-  
+
   // Healthcare providers (for reports)
   primaryCareProvider?: string;
   therapist?: string;
   psychiatrist?: string;
   cardiologist?: string;
-  
+
   // Default exercise routine
   defaultExercises?: string[];
-  
+
+  // Onboarding tracking
+  onboardingCompleted?: boolean;
+  onboardingCompletedAt?: string;  // ISO datetime
+  onboardingSkipped?: boolean;
+
   // Profile created
   createdAt: string;
   updatedAt: string;
