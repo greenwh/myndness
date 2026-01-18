@@ -4,32 +4,36 @@
 
 ## 🚀 **COLD START - READ THIS FIRST**
 
-**Current Status:** Phase 5 Complete (Mindfulness Tools)
-**Next Phase:** Phase 6 - Insights & Reporting (charts, trend analysis, data export)
-**Last Updated:** 2026-01-17
+**Current Status:** Phase 6 Complete (Insights & Reporting)
+**Next Phase:** Phase 7 - Movement & Polish (tai chi, stretching, onboarding, accessibility audit)
+**Last Updated:** 2026-01-18
 
 ### Quick Resume Instructions
-1. **Check live site**: https://greenwh.github.io/myndness/ (verify Phase 5 Mindfulness tools work)
-2. **Read implementation plan**: `cat docs-reference/IMPLEMENTATION_GUIDE.md` (Phase 6 details)
+1. **Check live site**: https://greenwh.github.io/myndness/ (verify Phase 6 Insights features work)
+2. **Read implementation plan**: `cat docs-reference/IMPLEMENTATION_GUIDE.md` (Phase 7 details)
 3. **Start dev server**: `npm run dev` (access at localhost:5173/myndness/)
 4. **Review user context below** - 64yo with ADHD, GAD, MDD, pacemaker (accessibility critical)
 
-### What Just Got Built (Phase 5)
-✅ **Mindfulness Tools** - Complete meditation and practice system
-- **Meditation Timer**: Silent visual timer (3-20 min) with optional mood tracking
-  - Auto-save to IndexedDB every 30 seconds
-  - Before/after mood, anxiety, and focus quality tracking
-  - Pause/resume functionality
-  - Exit early with supportive messaging
-- **Guided Practices**:
-  - Breath Awareness (5 min, 5 timed phases with instructional text)
-  - Body Scan (5 min short or 15 min full, progressive relaxation)
-  - Clinical safety: Avoids heart-specific focus (pacemaker user)
-- **Session History**:
-  - Last 30 days of sessions with stats (total sessions, minutes, avg duration)
-  - Filters: All / Completed / Incomplete
-  - Date-grouped cards showing mood/anxiety changes and notes
-- All routes: `/tools/mindfulness/*`
+### What Just Got Built (Phase 6)
+✅ **Insights & Reporting** - Data visualization and export system
+- **Interactive Charts** (Chart.js with accessibility features):
+  - Mood & Anxiety Trends: Dual-line chart with daily aggregated data
+  - Activity Completion: Horizontal bar chart by category
+  - Mindfulness Practice: Doughnut chart + stats cards (sessions, minutes, avg duration, streak)
+  - Blood Pressure Trends: Dual-line chart with anxiety-related markers
+  - All charts: 44px touch targets, reduced motion support, color-blind safe palette
+- **Insights Dashboard**:
+  - Weekly summary cards with neutral tone (no guilt language)
+  - Activity impact on mood (before/after analysis)
+  - Streak tracker (consecutive days with mindfulness/activities)
+  - Date range selector (7d, 30d, 90d, all time)
+- **Data Export**:
+  - CSV export (multiple files, one per data type)
+  - JSON export (single structured file with metadata)
+  - Client-side processing (privacy-first, no server upload)
+  - Selective export (choose which data types to include)
+- **Routes**: `/insights`, `/insights/export`
+- **Bundle size**: Chart.js adds ~170KB (acceptable for feature value)
 
 ---
 
@@ -93,7 +97,7 @@ git add -A && git commit -m "message" && git push origin main
 
 ---
 
-## Project Status (Phases 0-5 Complete)
+## Project Status (Phases 0-6 Complete)
 
 | Phase | Status | Description |
 |-------|--------|-------------|
@@ -102,8 +106,9 @@ git add -A && git commit -m "message" && git push origin main
 | Phase 2 | ✅ | Core tracking (mood, BP, dashboard) |
 | Phase 3 | ✅ | Behavioral Activation (activity planner) |
 | Phase 4 | ✅ | CBT Tools (thought records, distortions) |
-| Phase 5 | ✅ | **Mindfulness (meditation timer, guided practices, history)** - JUST COMPLETED |
-| Phase 6 | 🔜 | **Insights & Reporting (charts, trends, export)** - NEXT |
+| Phase 5 | ✅ | Mindfulness (meditation timer, guided practices, history) |
+| Phase 6 | ✅ | **Insights & Reporting (charts, trends, export)** - JUST COMPLETED |
+| Phase 7 | 🔜 | **Movement & Polish (tai chi, stretching, onboarding, help)** - NEXT |
 
 ---
 
@@ -132,6 +137,8 @@ git add -A && git commit -m "message" && git push origin main
 /plan                       Plan hub (today's progress, week stats)
 /plan/today                 Daily activity planner
 /plan/library               Activity library browser
+/insights                   Insights dashboard (charts, trends, streaks)
+/insights/export            Data export tool (CSV/JSON)
 /settings                   Placeholder
 ```
 
@@ -146,6 +153,9 @@ src/lib/components/
 │                    EmotionSelect, DistortionChecklist
 ├── crisis/          AnxietyHelpButton
 ├── grounding/       Grounding54321, GroundingStep
+├── insights/        DateRangeSelector, MoodTrendChart, ActivityCompletionChart,
+│                    MindfulnessChart, BPTrendChart, WeeklyInsights,
+│                    MoodCorrelations, StreakTracker
 ├── mindfulness/     MindfulnessTimer, MindfulnessDisplay, SessionTracker,
 │                    BreathAwareness, BodyScan, MindfulnessHistory
 └── mood/            MoodLogger, MoodSlider
@@ -219,45 +229,99 @@ Background: Military - needs structure
 
 ---
 
-## What's Next (Phase 6: Insights & Reporting)
+## What's Next (Phase 7: Movement & Polish)
 
 ### Overview
-Phase 6 adds data visualization and trend analysis to help users understand patterns in their mental wellness journey. All charts must be accessible, work offline, and support reduced motion.
+Phase 7 focuses on gentle movement resources and final app polish. This phase prepares the app for long-term use with onboarding, help documentation, and a comprehensive accessibility audit.
 
 ### Components to Build
-1. **Chart Components** (using lightweight charting library - consider Chart.js or similar):
-   - `MoodTrendChart.svelte` - Line chart showing mood/anxiety over time
-   - `ActivityChart.svelte` - Bar chart of activity completion rates
-   - `MindfulnessChart.svelte` - Practice time and frequency visualization
-   - `BPTrendChart.svelte` - Blood pressure readings over time
 
-2. **Insights Components**:
-   - `WeeklyInsights.svelte` - Summary of the week's data with patterns
-   - `MoodCorrelations.svelte` - Show correlations between activities and mood
-   - `StreakTracker.svelte` - Mindfulness practice streaks, activity completion
+1. **Movement Library** (`/tools/movement` route):
+   - `TaiChiLibrary.svelte` - Curated YouTube embeds (5-10 min beginner-friendly tai chi)
+   - `StretchingRoutines.svelte` - Links to gentle stretching resources
+   - **Clinical safety**: All videos vetted for pacemaker users (no intense cardio, avoid chest focus)
+   - Categories: Morning routine, Evening wind-down, Seated stretches, Standing balance
 
-3. **Export Components**:
-   - `DataExport.svelte` - Export data as CSV/JSON for external analysis
-   - Date range selector for export
+2. **Movement Prompts** (integrated into existing pages):
+   - `MovementReminder.svelte` - Gentle suggestions to stand/stretch
+   - Trigger: Every 60-90 minutes of app usage
+   - Dismissible, non-intrusive (small banner at top)
+   - Neutral tone: "Time for a movement break?" (no guilt)
+
+3. **Reminder/Notification System**:
+   - Morning check-in notification (optional, user-configured time)
+   - Evening review notification (optional, user-configured time)
+   - Activity reminder (1 hour before planned activity time)
+   - Uses Web Notifications API (requires user permission)
+   - All notifications toggleable in Settings
+
+4. **Onboarding Flow** (`/onboarding` route):
+   - Welcome screen with app purpose
+   - Optional profile setup (age, conditions, pacemaker flag)
+   - Accessibility preferences (font size, high contrast, reduced motion)
+   - Notification permissions request
+   - Quick tour of main features (crisis tools, tracking, planning)
+   - Skippable but encourages completion
+
+5. **Help/Documentation System**:
+   - `/help` route with FAQ and feature guides
+   - Inline help tooltips (? icon) on complex features
+   - Video demos embedded for visual learners
+   - Search functionality for help articles
+
+6. **Accessibility Audit & Fixes**:
+   - Keyboard navigation audit (ensure all features accessible via keyboard)
+   - Screen reader testing (NVDA on Windows, VoiceOver on macOS)
+   - Color contrast verification (all text meets WCAG AA 4.5:1)
+   - Touch target verification (all buttons/links 44px minimum)
+   - Focus indicator visibility (ensure :focus rings are visible)
+   - Reduced motion compliance (check all animations respect preference)
+   - Form label associations (ensure all inputs have proper labels)
+
+7. **Settings Implementation** (`/settings` route):
+   - Appearance: Theme (light/dark/system), Font size, High contrast, Reduced motion
+   - Notifications: Enable/disable, Morning time, Evening time, Activity reminders
+   - Data: Export data, Clear all data (with confirmation), About app
+   - Profile: Age, Conditions (optional), Pacemaker flag
 
 ### Routes to Create
-- `/insights` - Main insights dashboard with all charts
-- `/insights/export` - Data export tool
-
-### Design Requirements
-- **Accessible charts**: Screen reader compatible, keyboard navigable
-- **Color blindness safe**: Use patterns + colors, avoid red/green only
-- **Touch targets**: All chart interactions must be 44px minimum
-- **Reduced motion**: Disable animations when `prefers-reduced-motion: reduce`
-- **Date ranges**: Last 7 days, 30 days, 90 days, all time
-- **No guilt metrics**: Focus on data, not judgments ("3 sessions this week" not "only 3 sessions")
+- `/tools/movement` - Movement library hub
+- `/tools/movement/tai-chi` - Tai chi video library
+- `/tools/movement/stretching` - Stretching routine links
+- `/onboarding` - First-run onboarding flow
+- `/help` - Help documentation and FAQ
+- Update `/settings` - Implement actual settings (currently placeholder)
 
 ### Technical Considerations
-- **Charting library**: Lightweight, accessible, tree-shakeable
-- **Data aggregation**: Efficient queries across all tables
-- **Performance**: Lazy load charts, virtualize large datasets
-- **Export format**: CSV for spreadsheets, JSON for backup/restore
-- **Privacy**: All processing client-side, no data leaves device
+- **YouTube embeds**: Use `youtube-nocookie.com` for privacy, lazy load iframes
+- **Notifications**: Web Notifications API, graceful degradation if denied
+- **Onboarding**: Track completion in IndexedDB, show once on first visit
+- **Help search**: Simple client-side search (no external dependencies)
+- **Settings persistence**: Store in IndexedDB `settings` table (already exists)
+
+### Accessibility Audit Tools
+- **Keyboard**: Tab through entire app, ensure all interactive elements reachable
+- **Screen reader**: NVDA (free, Windows) or VoiceOver (built-in, macOS)
+- **Color contrast**: Chrome DevTools Lighthouse audit, or WebAIM Contrast Checker
+- **Touch targets**: Chrome DevTools mobile emulation, measure with ruler tool
+- **Focus indicators**: Visual inspection, ensure :focus styles are visible
+- **Reduced motion**: Test with browser setting enabled (`prefers-reduced-motion: reduce`)
+
+### Movement Video Curation Guidelines
+- **Duration**: 5-15 minutes (attention span friendly for ADHD)
+- **Intensity**: Gentle, suitable for 64yo with pacemaker
+- **Style**: Clear instruction, minimal music/distraction
+- **Categories**:
+  - Tai chi: Yang style 5-minute form, seated tai chi
+  - Stretching: Neck/shoulders, lower back, legs, full body
+  - Balance: Standing balance (near wall/chair), weight shifting
+- **Safety**: Avoid high-intensity, avoid chest-focused exercises, emphasize breathing
+
+### Design Patterns
+- **Movement prompts**: Non-modal banner at top, easily dismissed, reappears after 24 hours
+- **Onboarding**: Wizard-style multi-step flow, progress indicator, skip button always visible
+- **Help articles**: Card-based layout, search box at top, category filters
+- **Settings**: Grouped by category, toggle switches for booleans, clear labels
 
 ---
 
