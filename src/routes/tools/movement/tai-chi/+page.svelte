@@ -8,249 +8,362 @@
     <p class="text-gray-600">Gentle flowing movements for balance, flexibility, and calm</p>
   </header>
 
-  <!-- Morning Routine -->
-  <section class="category-section">
-    <h2 class="category-title">Morning Routine</h2>
-    <p class="category-description">Gentle practices to start your day</p>
-    <div class="video-grid">
-      <div class="video-card">
-        <div class="video-wrapper">
-          <iframe
-            loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/wCFB8rj0p-8"
-            title="5-Minute Tai Chi for Beginners"
-            frameborder="0"
-            allow="accelerometer; encrypted-media; gyroscope"
-            allowfullscreen
-          ></iframe>
+  <!-- Recommended Channels -->
+  <section class="info-section">
+    <h2 class="section-title">Recommended YouTube Channels</h2>
+    <p class="section-description">Trusted sources for gentle, beginner-friendly tai chi instruction</p>
+    <div class="channel-list">
+      <a
+        href="https://www.youtube.com/@TaiChiForHealthInstitute"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="channel-card"
+      >
+        <span class="channel-icon">▶️</span>
+        <div>
+          <h3 class="channel-name">Tai Chi for Health Institute</h3>
+          <p class="channel-description">Dr. Paul Lam's official channel - evidence-based programs</p>
         </div>
-        <h3 class="video-title">5-Minute Tai Chi Flow</h3>
-        <p class="video-description">Simple morning practice for beginners</p>
-      </div>
+      </a>
 
-      <div class="video-card">
-        <div class="video-wrapper">
-          <iframe
-            loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/6w05yOw0GbI"
-            title="10-Minute Gentle Tai Chi"
-            frameborder="0"
-            allow="accelerometer; encrypted-media; gyroscope"
-            allowfullscreen
-          ></iframe>
+      <a
+        href="https://www.youtube.com/@TaiChiOnline"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="channel-card"
+      >
+        <span class="channel-icon">▶️</span>
+        <div>
+          <h3 class="channel-name">Tai Chi Online</h3>
+          <p class="channel-description">Comprehensive lessons for all levels</p>
         </div>
-        <h3 class="video-title">10-Minute Gentle Tai Chi</h3>
-        <p class="video-description">Easy morning movements</p>
-      </div>
+      </a>
+
+      <a
+        href="https://www.youtube.com/@YoQiYoga"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="channel-card"
+      >
+        <span class="channel-icon">▶️</span>
+        <div>
+          <h3 class="channel-name">YoQi Yoga & Qigong</h3>
+          <p class="channel-description">Gentle qigong and tai chi flows</p>
+        </div>
+      </a>
     </div>
   </section>
 
-  <!-- Evening Practice -->
-  <section class="category-section">
-    <h2 class="category-title">Evening Practice</h2>
-    <p class="category-description">Calm movements to wind down</p>
-    <div class="video-grid">
-      <div class="video-card">
-        <div class="video-wrapper">
-          <iframe
-            loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/6w7IS8_UzHM"
-            title="Tai Chi for Relaxation"
-            frameborder="0"
-            allow="accelerometer; encrypted-media; gyroscope"
-            allowfullscreen
-          ></iframe>
+  <!-- Search Suggestions -->
+  <section class="info-section">
+    <h2 class="section-title">Find Videos by Topic</h2>
+    <p class="section-description">Click to search YouTube for specific practices</p>
+    <div class="search-grid">
+      <a
+        href="https://www.youtube.com/results?search_query=gentle+tai+chi+for+beginners+5+minutes"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="search-card"
+      >
+        <span class="search-emoji">🌅</span>
+        <div>
+          <h3 class="search-title">Morning Routine</h3>
+          <p class="search-description">Short, gentle practices to start your day</p>
         </div>
-        <h3 class="video-title">Calming Evening Practice</h3>
-        <p class="video-description">Gentle movements for relaxation</p>
-      </div>
+      </a>
+
+      <a
+        href="https://www.youtube.com/results?search_query=seated+tai+chi+for+seniors"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="search-card"
+      >
+        <span class="search-emoji">🪑</span>
+        <div>
+          <h3 class="search-title">Seated Practice</h3>
+          <p class="search-description">Full routines from a chair</p>
+        </div>
+      </a>
+
+      <a
+        href="https://www.youtube.com/results?search_query=tai+chi+for+balance+seniors"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="search-card"
+      >
+        <span class="search-emoji">⚖️</span>
+        <div>
+          <h3 class="search-title">Balance Work</h3>
+          <p class="search-description">Improve stability with gentle movements</p>
+        </div>
+      </a>
+
+      <a
+        href="https://www.youtube.com/results?search_query=evening+tai+chi+relaxation"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="search-card"
+      >
+        <span class="search-emoji">🌙</span>
+        <div>
+          <h3 class="search-title">Evening Practice</h3>
+          <p class="search-description">Calming movements to wind down</p>
+        </div>
+      </a>
     </div>
   </section>
 
-  <!-- Seated Practice -->
-  <section class="category-section">
-    <h2 class="category-title">Seated Practice</h2>
-    <p class="category-description">Gentle tai chi you can do sitting down</p>
-    <div class="video-grid">
-      <div class="video-card">
-        <div class="video-wrapper">
-          <iframe
-            loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/eLE2xLDubP4"
-            title="Seated Tai Chi"
-            frameborder="0"
-            allow="accelerometer; encrypted-media; gyroscope"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <h3 class="video-title">Seated Tai Chi Routine</h3>
-        <p class="video-description">Full practice from a chair</p>
-      </div>
+  <!-- Practice Tips -->
+  <section class="info-section">
+    <h2 class="section-title">Practice Tips</h2>
+    <div class="tips-content">
+      <h3 class="tips-subtitle">What to Look For in Videos</h3>
+      <ul class="tips-list">
+        <li>Duration: 5-15 minutes for beginners</li>
+        <li>Pace: Slow, with clear explanations</li>
+        <li>Instructor: Calm, encouraging tone</li>
+        <li>Style: Yang style is most common for beginners</li>
+      </ul>
 
-      <div class="video-card">
-        <div class="video-wrapper">
-          <iframe
-            loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/vX3zD5pLudo"
-            title="Chair Tai Chi for Seniors"
-            frameborder="0"
-            allow="accelerometer; encrypted-media; gyroscope"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <h3 class="video-title">Chair Tai Chi</h3>
-        <p class="video-description">Gentle movements for all abilities</p>
-      </div>
+      <h3 class="tips-subtitle">Safety Guidelines</h3>
+      <ul class="tips-list">
+        <li>Start with shorter videos (5 minutes) and gradually build up</li>
+        <li>Have a chair or wall nearby for balance support</li>
+        <li>Move slowly and breathe naturally</li>
+        <li>Stop if you feel dizzy, short of breath, or any discomfort</li>
+        <li>These gentle practices are suitable for users with pacemakers</li>
+      </ul>
+
+      <h3 class="tips-subtitle">Getting Started</h3>
+      <ul class="tips-list">
+        <li>Watch a video once through before attempting</li>
+        <li>Don't worry about perfection - focus on gentle movement</li>
+        <li>Practice at the same time each day for best results</li>
+        <li>Start with seated practices if balance is a concern</li>
+      </ul>
     </div>
   </section>
 
-  <!-- Balance Practice -->
-  <section class="category-section">
-    <h2 class="category-title">Balance & Stability</h2>
-    <p class="category-description">Gentle balance work (have a chair nearby for support)</p>
-    <div class="video-grid">
-      <div class="video-card">
-        <div class="video-wrapper">
-          <iframe
-            loading="lazy"
-            src="https://www.youtube-nocookie.com/embed/DnjzKUpleDs"
-            title="Tai Chi for Balance"
-            frameborder="0"
-            allow="accelerometer; encrypted-media; gyroscope"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <h3 class="video-title">Tai Chi Balance Exercises</h3>
-        <p class="video-description">Improve stability with gentle movements</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Safety Note -->
-  <div class="safety-note">
-    <h3 class="font-medium text-sm text-gray-700 mb-2">Practice Tips</h3>
-    <ul class="text-sm text-gray-600 space-y-2">
-      <li>• Start with shorter videos (5 minutes) and gradually build up</li>
-      <li>• Have a chair or wall nearby for balance support</li>
-      <li>• Move slowly and breathe naturally</li>
-      <li>• Stop if you feel dizzy, short of breath, or any discomfort</li>
-      <li>• These videos are gentle and suitable for users with pacemakers</li>
-    </ul>
+  <!-- External Link Notice -->
+  <div class="external-notice">
+    <p>
+      <strong>Note:</strong> Links open YouTube in a new tab. YouTube content is not controlled
+      by Myndness. Choose videos that feel comfortable for your fitness level.
+    </p>
   </div>
 </div>
 
 <style>
-  .category-section {
-    margin-bottom: 2rem;
+  .info-section {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
-  .category-title {
+  .section-title {
     font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .section-description {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin: 0 0 1.25rem 0;
+  }
+
+  /* Channel Cards */
+  .channel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .channel-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+    min-height: 60px;
+  }
+
+  .channel-card:hover {
+    border-color: #3b82f6;
+    background: #f9fafb;
+  }
+
+  .channel-card:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  .channel-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .channel-name {
+    font-size: 1rem;
     font-weight: 600;
     color: #111827;
     margin: 0 0 0.25rem 0;
   }
 
-  .category-description {
-    font-size: 0.95rem;
+  .channel-description {
+    font-size: 0.9rem;
     color: #6b7280;
-    margin: 0 0 1rem 0;
+    margin: 0;
   }
 
-  .video-grid {
+  /* Search Cards */
+  .search-grid {
     display: grid;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   @media (min-width: 640px) {
-    .video-grid {
+    .search-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  .video-card {
-    background: white;
+  .search-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f9fafb;
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    overflow: hidden;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+    min-height: 80px;
   }
 
-  .video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    height: 0;
-    overflow: hidden;
+  .search-card:hover {
+    border-color: #3b82f6;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   }
 
-  .video-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  .search-card:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
   }
 
-  .video-title {
+  .search-emoji {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .search-title {
     font-size: 1rem;
     font-weight: 600;
     color: #111827;
-    margin: 0;
-    padding: 1rem 1rem 0.5rem 1rem;
+    margin: 0 0 0.25rem 0;
   }
 
-  .video-description {
+  .search-description {
     font-size: 0.9rem;
     color: #6b7280;
     margin: 0;
-    padding: 0 1rem 1rem 1rem;
   }
 
-  .safety-note {
+  /* Tips Content */
+  .tips-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .tips-subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.75rem 0;
+  }
+
+  .tips-list {
+    list-style: disc;
+    margin: 0;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+
+  .tips-list li {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+  }
+
+  /* External Notice */
+  .external-notice {
     background: #eff6ff;
     border: 1px solid #bfdbfe;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 1rem;
   }
 
-  .safety-note h3 {
-    color: #1e40af;
-    margin: 0 0 0.5rem 0;
-  }
-
-  .safety-note ul {
-    color: #1e40af;
+  .external-notice p {
     margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .safety-note li {
+    font-size: 0.9rem;
+    color: #1e40af;
     line-height: 1.5;
   }
 
   /* Dark mode */
-  :global(.dark-mode) .category-title,
-  :global(.dark-mode) .video-title {
-    color: #f9fafb;
-  }
-
-  :global(.dark-mode) .category-description,
-  :global(.dark-mode) .video-description {
-    color: #9ca3af;
-  }
-
-  :global(.dark-mode) .video-card {
+  :global(.dark-mode) .info-section {
     background: #1f2937;
     border-color: #374151;
   }
 
-  :global(.dark-mode) .safety-note {
+  :global(.dark-mode) .section-title,
+  :global(.dark-mode) .channel-name,
+  :global(.dark-mode) .search-title,
+  :global(.dark-mode) .tips-subtitle {
+    color: #f9fafb;
+  }
+
+  :global(.dark-mode) .section-description,
+  :global(.dark-mode) .channel-description,
+  :global(.dark-mode) .search-description {
+    color: #9ca3af;
+  }
+
+  :global(.dark-mode) .channel-card {
+    border-color: #374151;
+    background: transparent;
+  }
+
+  :global(.dark-mode) .channel-card:hover {
+    background: #374151;
+  }
+
+  :global(.dark-mode) .search-card {
+    background: #374151;
+    border-color: #4b5563;
+  }
+
+  :global(.dark-mode) .search-card:hover {
+    background: #4b5563;
+  }
+
+  :global(.dark-mode) .tips-list {
+    color: #d1d5db;
+  }
+
+  :global(.dark-mode) .external-notice {
     background: #1e3a5f;
     border-color: #2563eb;
   }
 
-  :global(.dark-mode) .safety-note h3,
-  :global(.dark-mode) .safety-note ul {
+  :global(.dark-mode) .external-notice p {
     color: #93c5fd;
   }
 </style>
