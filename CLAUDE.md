@@ -4,23 +4,32 @@
 
 ## 🚀 **COLD START - READ THIS FIRST**
 
-**Current Status:** Phase 4 Complete (CBT Tools deployed and tested)
-**Next Phase:** Phase 5 - Mindfulness Tools (breath awareness, body scan, session timer)
+**Current Status:** Phase 5 Complete (Mindfulness Tools)
+**Next Phase:** Phase 6 - Insights & Reporting (charts, trend analysis, data export)
 **Last Updated:** 2026-01-17
 
 ### Quick Resume Instructions
-1. **Check live site**: https://greenwh.github.io/myndness/ (verify Phase 4 CBT tools work)
-2. **Read implementation plan**: `cat docs-reference/IMPLEMENTATION_GUIDE.md` (Phase 5 details)
+1. **Check live site**: https://greenwh.github.io/myndness/ (verify Phase 5 Mindfulness tools work)
+2. **Read implementation plan**: `cat docs-reference/IMPLEMENTATION_GUIDE.md` (Phase 6 details)
 3. **Start dev server**: `npm run dev` (access at localhost:5173/myndness/)
 4. **Review user context below** - 64yo with ADHD, GAD, MDD, pacemaker (accessibility critical)
 
-### What Just Got Built (Phase 4)
-✅ **CBT Tools** - Complete thought record system
-- 7-step thought record form with auto-save
-- 14 cognitive distortions checklist
-- Distortions reference guide
-- Thought record history with filters
-- All routes: `/tools/cbt/*`
+### What Just Got Built (Phase 5)
+✅ **Mindfulness Tools** - Complete meditation and practice system
+- **Meditation Timer**: Silent visual timer (3-20 min) with optional mood tracking
+  - Auto-save to IndexedDB every 30 seconds
+  - Before/after mood, anxiety, and focus quality tracking
+  - Pause/resume functionality
+  - Exit early with supportive messaging
+- **Guided Practices**:
+  - Breath Awareness (5 min, 5 timed phases with instructional text)
+  - Body Scan (5 min short or 15 min full, progressive relaxation)
+  - Clinical safety: Avoids heart-specific focus (pacemaker user)
+- **Session History**:
+  - Last 30 days of sessions with stats (total sessions, minutes, avg duration)
+  - Filters: All / Completed / Incomplete
+  - Date-grouped cards showing mood/anxiety changes and notes
+- All routes: `/tools/mindfulness/*`
 
 ---
 
@@ -84,7 +93,7 @@ git add -A && git commit -m "message" && git push origin main
 
 ---
 
-## Project Status (Phases 0-4 Complete)
+## Project Status (Phases 0-5 Complete)
 
 | Phase | Status | Description |
 |-------|--------|-------------|
@@ -92,9 +101,9 @@ git add -A && git commit -m "message" && git push origin main
 | Phase 1 | ✅ | Crisis tools (4-7-8 breathing, 5-4-3-2-1 grounding) |
 | Phase 2 | ✅ | Core tracking (mood, BP, dashboard) |
 | Phase 3 | ✅ | Behavioral Activation (activity planner) |
-| Phase 4 | ✅ | **CBT Tools (thought records, distortions)** - JUST COMPLETED |
-| Phase 5 | 🔜 | **Mindfulness (breath awareness, body scan)** - NEXT |
-| Phase 6 | ❌ | Insights & Reporting (charts, export) |
+| Phase 4 | ✅ | CBT Tools (thought records, distortions) |
+| Phase 5 | ✅ | **Mindfulness (meditation timer, guided practices, history)** - JUST COMPLETED |
+| Phase 6 | 🔜 | **Insights & Reporting (charts, trends, export)** - NEXT |
 
 ---
 
@@ -112,6 +121,11 @@ git add -A && git commit -m "message" && git push origin main
 /tools/cbt/thought-record/[id]  Edit existing thought record
 /tools/cbt/history          Thought records list
 /tools/cbt/distortions      Cognitive distortions reference guide
+/tools/mindfulness          Mindfulness hub
+/tools/mindfulness/timer    Meditation timer (3-20 min)
+/tools/mindfulness/breath   Breath awareness practice (5 min)
+/tools/mindfulness/body-scan Body scan meditation (5 or 15 min)
+/tools/mindfulness/history  Mindfulness session history
 /track                      Track hub
 /track/mood                 Mood + anxiety logger
 /track/bp                   Blood pressure logger
@@ -132,15 +146,17 @@ src/lib/components/
 │                    EmotionSelect, DistortionChecklist
 ├── crisis/          AnxietyHelpButton
 ├── grounding/       Grounding54321, GroundingStep
+├── mindfulness/     MindfulnessTimer, MindfulnessDisplay, SessionTracker,
+│                    BreathAwareness, BodyScan, MindfulnessHistory
 └── mood/            MoodLogger, MoodSlider
 ```
 
 ### Database (IndexedDB via Dexie)
 - **Types**: `src/lib/db/types.ts` - All interfaces
 - **DB**: `src/lib/db/index.ts` - Dexie instance + helpers
-- **Active tables**: moodLogs, bpReadings, plannedActivities, activityLibrary, thoughtRecords
+- **Active tables**: moodLogs, bpReadings, plannedActivities, activityLibrary, thoughtRecords, mindfulnessSessions
 - **30 pre-seeded activities** across 6 categories
-- **Query helpers**: getMoodLogs(), getPlannedActivities(), getThoughtRecords(), getThoughtRecordStats()
+- **Query helpers**: getMoodLogs(), getPlannedActivities(), getThoughtRecords(), getThoughtRecordStats(), getMindfulnessSessions(), getMindfulnessMinutes()
 
 ---
 
@@ -203,32 +219,45 @@ Background: Military - needs structure
 
 ---
 
-## What's Next (Phase 5: Mindfulness Tools)
+## What's Next (Phase 6: Insights & Reporting)
+
+### Overview
+Phase 6 adds data visualization and trend analysis to help users understand patterns in their mental wellness journey. All charts must be accessible, work offline, and support reduced motion.
 
 ### Components to Build
-1. `MindfulnessTimer.svelte` - Configurable meditation timer
-2. `BreathAwareness.svelte` - Guided breath awareness exercise
-3. `BodyScan.svelte` - Progressive body scan (short 5min / full 15min)
-4. `MindfulnessHistory.svelte` - List of past sessions
+1. **Chart Components** (using lightweight charting library - consider Chart.js or similar):
+   - `MoodTrendChart.svelte` - Line chart showing mood/anxiety over time
+   - `ActivityChart.svelte` - Bar chart of activity completion rates
+   - `MindfulnessChart.svelte` - Practice time and frequency visualization
+   - `BPTrendChart.svelte` - Blood pressure readings over time
+
+2. **Insights Components**:
+   - `WeeklyInsights.svelte` - Summary of the week's data with patterns
+   - `MoodCorrelations.svelte` - Show correlations between activities and mood
+   - `StreakTracker.svelte` - Mindfulness practice streaks, activity completion
+
+3. **Export Components**:
+   - `DataExport.svelte` - Export data as CSV/JSON for external analysis
+   - Date range selector for export
 
 ### Routes to Create
-- `/tools/mindfulness` - Mindfulness hub
-- `/tools/mindfulness/timer` - Session timer
-- `/tools/mindfulness/breath` - Breath awareness practice
-- `/tools/mindfulness/body-scan` - Body scan meditation
-- `/tools/mindfulness/history` - Session history
+- `/insights` - Main insights dashboard with all charts
+- `/insights/export` - Data export tool
 
-### Database
-- Types already exist in `types.ts` (MindfulnessSession, MindfulnessPracticeType)
-- Table already defined in `index.ts` (mindfulnessSessions)
-- Query helpers: getMindfulnessSessions(), getMindfulnessMinutes()
+### Design Requirements
+- **Accessible charts**: Screen reader compatible, keyboard navigable
+- **Color blindness safe**: Use patterns + colors, avoid red/green only
+- **Touch targets**: All chart interactions must be 44px minimum
+- **Reduced motion**: Disable animations when `prefers-reduced-motion: reduce`
+- **Date ranges**: Last 7 days, 30 days, 90 days, all time
+- **No guilt metrics**: Focus on data, not judgments ("3 sessions this week" not "only 3 sessions")
 
-### Design Notes
-- **Silent timer** - visual only, no audio (user may be in public)
-- **Flexible duration** - 3, 5, 10, 15, 20 minute options
-- **Exit always available** - can stop anytime without guilt
-- **Mood tracking** - before/after mood/anxiety ratings (optional)
-- **Focus quality** - self-rating of how focused they were (0-10)
+### Technical Considerations
+- **Charting library**: Lightweight, accessible, tree-shakeable
+- **Data aggregation**: Efficient queries across all tables
+- **Performance**: Lazy load charts, virtualize large datasets
+- **Export format**: CSV for spreadsheets, JSON for backup/restore
+- **Privacy**: All processing client-side, no data leaves device
 
 ---
 
