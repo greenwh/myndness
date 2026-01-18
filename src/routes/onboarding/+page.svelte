@@ -44,19 +44,33 @@
 
   async function handleComplete() {
     // Parse conditions
+    let conditions: string[] | undefined = undefined;
     if (conditionsText) {
-      const conditions = conditionsText
+      conditions = conditionsText
         .split(',')
         .map(c => c.trim())
         .filter(c => c.length > 0);
-      profileData.conditions = conditions;
     }
 
+    // Convert proxy to plain object (Svelte 5 fix for IndexedDB)
+    const plainProfileData = {
+      age: profileData.age,
+      conditions: conditions,
+      hasPacemaker: profileData.hasPacemaker
+    };
+
+    // Convert settings proxy to plain object
+    const plainSettingsData = {
+      fontSize: settingsData.fontSize,
+      highContrast: settingsData.highContrast,
+      notificationsEnabled: settingsData.notificationsEnabled
+    };
+
     // Save profile
-    await updateUserProfile(profileData);
+    await updateUserProfile(plainProfileData);
 
     // Save settings
-    await updateSettings(settingsData);
+    await updateSettings(plainSettingsData);
 
     // Mark onboarding complete
     await completeOnboarding();
