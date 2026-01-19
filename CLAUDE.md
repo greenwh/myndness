@@ -1,46 +1,5 @@
 # Myndness - Mental Wellness PWA
 
----
-
-## 🚀 **COLD START - READ THIS FIRST**
-
-**Current Status:** Phase 6 Complete (Insights & Reporting)
-**Next Phase:** Phase 7 - Movement & Polish (tai chi, stretching, onboarding, accessibility audit)
-**Last Updated:** 2026-01-18
-
-### Quick Resume Instructions
-1. **Check live site**: https://greenwh.github.io/myndness/ (verify Phase 6 Insights features work)
-2. **Read implementation plan**: `cat docs-reference/IMPLEMENTATION_GUIDE.md` (Phase 7 details)
-3. **Start dev server**: `npm run dev` (access at localhost:5173/myndness/)
-4. **Review user context below** - 64yo with ADHD, GAD, MDD, pacemaker (accessibility critical)
-
-### What Just Got Built (Phase 6)
-✅ **Insights & Reporting** - Data visualization and export system
-- **Interactive Charts** (Chart.js with accessibility features):
-  - Mood & Anxiety Trends: Dual-line chart with daily aggregated data
-  - Activity Completion: Horizontal bar chart by category
-  - Mindfulness Practice: Doughnut chart + stats cards (sessions, minutes, avg duration, streak)
-  - Blood Pressure Trends: Dual-line chart with anxiety-related markers
-  - All charts: 44px touch targets, reduced motion support, color-blind safe palette
-- **Insights Dashboard**:
-  - Weekly summary cards with neutral tone (no guilt language)
-  - Activity impact on mood (before/after analysis)
-  - Streak tracker (consecutive days with mindfulness/activities)
-  - Date range selector (7d, 30d, 90d, all time)
-- **Data Export**:
-  - CSV export (multiple files, one per data type)
-  - JSON export (single structured file with metadata)
-  - Client-side processing (privacy-first, no server upload)
-  - Selective export (choose which data types to include)
-- **Routes**: `/insights`, `/insights/export`
-- **Bundle size**: Chart.js adds ~170KB (acceptable for feature value)
-
----
-
-## Cold Start Instructions
-
-**Start here when resuming development on this project.**
-
 ## Model Selection & Complexity Assessment
 
 **Assessment Date:** [2026-01-11]
@@ -79,11 +38,6 @@
 - **Live**: https://greenwh.github.io/myndness/
 - **Status File**: `/home/dad/.claude/plans/eager-popping-manatee.md`
 
-### Before Starting Work
-1. Read the status file: `cat /home/dad/.claude/plans/eager-popping-manatee.md`
-2. Check current phase and what's next
-3. Review docs-reference/ for clinical context if needed
-
 ### Common Commands
 ```bash
 # Development
@@ -107,8 +61,8 @@ git add -A && git commit -m "message" && git push origin main
 | Phase 3 | ✅ | Behavioral Activation (activity planner) |
 | Phase 4 | ✅ | CBT Tools (thought records, distortions) |
 | Phase 5 | ✅ | Mindfulness (meditation timer, guided practices, history) |
-| Phase 6 | ✅ | **Insights & Reporting (charts, trends, export)** - JUST COMPLETED |
-| Phase 7 | 🔜 | **Movement & Polish (tai chi, stretching, onboarding, help)** - NEXT |
+| Phase 6 | ✅ | Insights & Reporting (charts, trends, export) |
+| Phase 7 | ✅ | Movement & Polish (tai chi, stretching, onboarding, help)|
 
 ---
 
@@ -229,102 +183,6 @@ Background: Military - needs structure
 
 ---
 
-## What's Next (Phase 7: Movement & Polish)
-
-### Overview
-Phase 7 focuses on gentle movement resources and final app polish. This phase prepares the app for long-term use with onboarding, help documentation, and a comprehensive accessibility audit.
-
-### Components to Build
-
-1. **Movement Library** (`/tools/movement` route):
-   - `TaiChiLibrary.svelte` - Curated YouTube embeds (5-10 min beginner-friendly tai chi)
-   - `StretchingRoutines.svelte` - Links to gentle stretching resources
-   - **Clinical safety**: All videos vetted for pacemaker users (no intense cardio, avoid chest focus)
-   - Categories: Morning routine, Evening wind-down, Seated stretches, Standing balance
-
-2. **Movement Prompts** (integrated into existing pages):
-   - `MovementReminder.svelte` - Gentle suggestions to stand/stretch
-   - Trigger: Every 60-90 minutes of app usage
-   - Dismissible, non-intrusive (small banner at top)
-   - Neutral tone: "Time for a movement break?" (no guilt)
-
-3. **Reminder/Notification System**:
-   - Morning check-in notification (optional, user-configured time)
-   - Evening review notification (optional, user-configured time)
-   - Activity reminder (1 hour before planned activity time)
-   - Uses Web Notifications API (requires user permission)
-   - All notifications toggleable in Settings
-
-4. **Onboarding Flow** (`/onboarding` route):
-   - Welcome screen with app purpose
-   - Optional profile setup (age, conditions, pacemaker flag)
-   - Accessibility preferences (font size, high contrast, reduced motion)
-   - Notification permissions request
-   - Quick tour of main features (crisis tools, tracking, planning)
-   - Skippable but encourages completion
-
-5. **Help/Documentation System**:
-   - `/help` route with FAQ and feature guides
-   - Inline help tooltips (? icon) on complex features
-   - Video demos embedded for visual learners
-   - Search functionality for help articles
-
-6. **Accessibility Audit & Fixes**:
-   - Keyboard navigation audit (ensure all features accessible via keyboard)
-   - Screen reader testing (NVDA on Windows, VoiceOver on macOS)
-   - Color contrast verification (all text meets WCAG AA 4.5:1)
-   - Touch target verification (all buttons/links 44px minimum)
-   - Focus indicator visibility (ensure :focus rings are visible)
-   - Reduced motion compliance (check all animations respect preference)
-   - Form label associations (ensure all inputs have proper labels)
-
-7. **Settings Implementation** (`/settings` route):
-   - Appearance: Theme (light/dark/system), Font size, High contrast, Reduced motion
-   - Notifications: Enable/disable, Morning time, Evening time, Activity reminders
-   - Data: Export data, Clear all data (with confirmation), About app
-   - Profile: Age, Conditions (optional), Pacemaker flag
-
-### Routes to Create
-- `/tools/movement` - Movement library hub
-- `/tools/movement/tai-chi` - Tai chi video library
-- `/tools/movement/stretching` - Stretching routine links
-- `/onboarding` - First-run onboarding flow
-- `/help` - Help documentation and FAQ
-- Update `/settings` - Implement actual settings (currently placeholder)
-
-### Technical Considerations
-- **YouTube embeds**: Use `youtube-nocookie.com` for privacy, lazy load iframes
-- **Notifications**: Web Notifications API, graceful degradation if denied
-- **Onboarding**: Track completion in IndexedDB, show once on first visit
-- **Help search**: Simple client-side search (no external dependencies)
-- **Settings persistence**: Store in IndexedDB `settings` table (already exists)
-
-### Accessibility Audit Tools
-- **Keyboard**: Tab through entire app, ensure all interactive elements reachable
-- **Screen reader**: NVDA (free, Windows) or VoiceOver (built-in, macOS)
-- **Color contrast**: Chrome DevTools Lighthouse audit, or WebAIM Contrast Checker
-- **Touch targets**: Chrome DevTools mobile emulation, measure with ruler tool
-- **Focus indicators**: Visual inspection, ensure :focus styles are visible
-- **Reduced motion**: Test with browser setting enabled (`prefers-reduced-motion: reduce`)
-
-### Movement Video Curation Guidelines
-- **Duration**: 5-15 minutes (attention span friendly for ADHD)
-- **Intensity**: Gentle, suitable for 64yo with pacemaker
-- **Style**: Clear instruction, minimal music/distraction
-- **Categories**:
-  - Tai chi: Yang style 5-minute form, seated tai chi
-  - Stretching: Neck/shoulders, lower back, legs, full body
-  - Balance: Standing balance (near wall/chair), weight shifting
-- **Safety**: Avoid high-intensity, avoid chest-focused exercises, emphasize breathing
-
-### Design Patterns
-- **Movement prompts**: Non-modal banner at top, easily dismissed, reappears after 24 hours
-- **Onboarding**: Wizard-style multi-step flow, progress indicator, skip button always visible
-- **Help articles**: Card-based layout, search box at top, category filters
-- **Settings**: Grouped by category, toggle switches for booleans, clear labels
-
----
-
 ## Future Enhancements (Post-Phase 7)
 
 The following features have placeholder UI ("Coming Soon") but are **NOT part of Phase 7**. They are designed in `db/types.ts` but not yet implemented. Consider these for Phase 8 or beyond:
@@ -359,7 +217,6 @@ The following features have placeholder UI ("Coming Soon") but are **NOT part of
    - Will be partially implemented in Phase 7
    - Advanced features (backup frequency, weekly goals) for later
 
-**Decision**: Focus Phase 7 on movement, onboarding, help, and accessibility audit. Advanced CBT tools (experiments, hierarchy) can be Phase 8 if needed.
 
 ---
 

@@ -14,14 +14,14 @@
     <p class="section-description">Trusted sources for gentle, beginner-friendly tai chi instruction</p>
     <div class="channel-list">
       <a
-        href="https://www.youtube.com/@TaiChiForHealthInstitute"
+        href="https://www.youtube.com/@drpaullamtaichiproductions"
         target="_blank"
         rel="noopener noreferrer"
         class="channel-card"
       >
         <span class="channel-icon">▶️</span>
         <div>
-          <h3 class="channel-name">Tai Chi for Health Institute</h3>
+          <h3 class="channel-name">Tai Chi for Health </h3>
           <p class="channel-description">Dr. Paul Lam's official channel - evidence-based programs</p>
         </div>
       </a>
