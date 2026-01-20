@@ -51,7 +51,7 @@ git add -A && git commit -m "message" && git push origin main
 
 ---
 
-## Project Status (Phases 0-6 Complete)
+## Project Status (All Phases Complete - Production Ready)
 
 | Phase | Status | Description |
 |-------|--------|-------------|
@@ -63,6 +63,9 @@ git add -A && git commit -m "message" && git push origin main
 | Phase 5 | ✅ | Mindfulness (meditation timer, guided practices, history) |
 | Phase 6 | ✅ | Insights & Reporting (charts, trends, export) |
 | Phase 7 | ✅ | Movement & Polish (tai chi, stretching, onboarding, help)|
+| Phase 8A | ✅ | Activities Tracking (exercise logger with ratings) |
+| Phase 8B | ✅ | Behavioral Experiments (test beliefs, track outcomes) |
+| Phase 8C | ✅ | Anxiety Hierarchy (exposure therapy ladder) |
 
 ---
 
@@ -80,6 +83,13 @@ git add -A && git commit -m "message" && git push origin main
 /tools/cbt/thought-record/[id]  Edit existing thought record
 /tools/cbt/history          Thought records list
 /tools/cbt/distortions      Cognitive distortions reference guide
+/tools/cbt/experiment       Behavioral experiments hub
+/tools/cbt/experiment/new   New experiment (4 steps)
+/tools/cbt/experiment/[id]  Complete/view experiment
+/tools/cbt/hierarchy        Anxiety hierarchy hub
+/tools/cbt/hierarchy/new    New hierarchy item (4 steps)
+/tools/cbt/hierarchy/[id]   Hierarchy item detail & progress
+/tools/cbt/hierarchy/[id]/expose  Log exposure attempt
 /tools/mindfulness          Mindfulness hub
 /tools/mindfulness/timer    Meditation timer (3-20 min)
 /tools/mindfulness/breath   Breath awareness practice (5 min)
@@ -88,6 +98,8 @@ git add -A && git commit -m "message" && git push origin main
 /track                      Track hub
 /track/mood                 Mood + anxiety logger
 /track/bp                   Blood pressure logger
+/track/activities           Activities logger (exercise tracking)
+/track/activities/history   Activities history (filterable)
 /plan                       Plan hub (today's progress, week stats)
 /plan/today                 Daily activity planner
 /plan/library               Activity library browser
@@ -99,10 +111,14 @@ git add -A && git commit -m "message" && git push origin main
 ### Component Structure
 ```
 src/lib/components/
-├── activities/      ActivityCard, ActivityLibrary, ActivityPlanner
+├── activities/      ActivityCard, ActivityLibrary, ActivityPlanner,
+│                    ActivityLogger, ActivityHistory
 ├── breathing/       BreathingTimer, BreathingCircle
 ├── bp/              BPLogger
-├── cbt/             ThoughtRecordForm, ThoughtRecordHistory, DistortionReference
+├── cbt/             ThoughtRecordForm, ThoughtRecordHistory, DistortionReference,
+│                    BehavioralExperimentForm, ExperimentCompletionForm,
+│                    BehavioralExperimentHistory, HierarchyItemForm, HierarchyList,
+│                    HierarchyDetail, ExposureLogForm, ExposureChart
 ├── common/          Navigation, ProgressSteps, CharacterCounter, IntensitySlider,
 │                    EmotionSelect, DistortionChecklist
 ├── crisis/          AnxietyHelpButton
@@ -118,9 +134,16 @@ src/lib/components/
 ### Database (IndexedDB via Dexie)
 - **Types**: `src/lib/db/types.ts` - All interfaces
 - **DB**: `src/lib/db/index.ts` - Dexie instance + helpers
-- **Active tables**: moodLogs, bpReadings, plannedActivities, activityLibrary, thoughtRecords, mindfulnessSessions
+- **Active tables**: moodLogs, bpReadings, plannedActivities, activityLibrary, thoughtRecords, mindfulnessSessions, activities, behavioralExperiments, anxietyHierarchy
 - **30 pre-seeded activities** across 6 categories
-- **Query helpers**: getMoodLogs(), getPlannedActivities(), getThoughtRecords(), getThoughtRecordStats(), getMindfulnessSessions(), getMindfulnessMinutes()
+- **Query helpers**:
+  - Mood/BP: getMoodLogs(), getBPReadings()
+  - Planning: getPlannedActivities(), getActivityLibraryByCategory()
+  - CBT: getThoughtRecords(), getThoughtRecordStats(), getIncompleteThoughtRecords()
+  - Mindfulness: getMindfulnessSessions(), getMindfulnessMinutes()
+  - Activities: getActivities(), getRecentActivities(), getActivityStats()
+  - Experiments: getBehavioralExperiments(), getIncompleteExperiments(), getExperimentById(), getExperimentStats()
+  - Hierarchy: getAnxietyHierarchy(), getHierarchyItemById(), addExposureAttempt(), getHierarchyStats()
 
 ---
 
@@ -152,9 +175,12 @@ src/lib/components/
 
 | File | Purpose |
 |------|---------|
+| `USER_GUIDE.md` | Complete user guide for all features |
 | `docs-reference/IMPLEMENTATION_GUIDE.md` | Full 7-phase implementation plan |
 | `docs-reference/mental_wellness_architecture_analysis.md` | Clinical context, user profile |
-| `/home/dad/.claude/plans/eager-popping-manatee.md` | Current session status |
+| `docs-reference/PHASE_8B_COLDSTART.md` | Phase 8B cold start instructions |
+| `docs-reference/PHASE_8C_COLDSTART.md` | Phase 8C cold start instructions |
+| `/home/dad/.claude/plans/composed-enchanting-abelson.md` | Phase 8 session status |
 | `src/lib/db/types.ts` | All TypeScript interfaces |
 | `src/lib/db/index.ts` | Database + query helpers |
 | `svelte.config.js` | Base path + adapter config |
@@ -183,38 +209,56 @@ Background: Military - needs structure
 
 ---
 
-## Future Enhancements (Post-Phase 7)
+## Phase 8 Implementation (Complete)
 
-The following features have placeholder UI ("Coming Soon") but are **NOT part of Phase 7**. They are designed in `db/types.ts` but not yet implemented. Consider these for Phase 8 or beyond:
+### Phase 8A: Activities Tracking ✅ COMPLETE
+- **Routes**: `/track/activities`, `/track/activities/history`
+- **Components**: `ActivityLogger.svelte`, `ActivityHistory.svelte`
+- **Features**:
+  - Log exercises: type, duration (1-300 min), intensity (light/moderate/vigorous)
+  - Optional ratings: enjoyment (0-10), mastery (0-10)
+  - Optional details: equipment, location, notes (max 200 chars)
+  - Explicit-save pattern with success view
+  - History: last 90 days, filterable by type, date-grouped
+- **Database**: `activities` table, helpers: getActivities(), getRecentActivities(), getActivityStats()
+- **Accessibility**: 44px touch targets, custom range inputs with show/hide pattern for optional ratings
 
-### Advanced CBT Tools (Phase 8 candidate)
-1. **Behavioral Experiments** (`/tools/cbt/experiment`):
-   - Test beliefs with real-world experiments
-   - Interface exists in `db/types.ts` as `BehavioralExperiment`
-   - Tracks hypothesis → experiment → outcome → revised belief
-   - Links to planned activities for execution
+### Phase 8B: Behavioral Experiments ✅ COMPLETE
+- **Routes**: `/tools/cbt/experiment` (hub), `/tools/cbt/experiment/new`, `/tools/cbt/experiment/[id]`
+- **Components**: BehavioralExperimentForm (multi-step), ExperimentCompletionForm, BehavioralExperimentHistory
+- **Features**:
+  - 4-step form: Identify belief → Design experiment → Make prediction → Schedule (optional)
+  - Auto-save with draft resume (< 24h)
+  - Track belief strength before/after (0-100 scale)
+  - Optional link to planned activities
+  - Visual before → after comparison on completion
+- **Pattern**: Multi-step auto-save (like ThoughtRecordForm)
+- **Database**: `behavioralExperiments` table with helpers for incomplete tracking
 
-2. **Anxiety Hierarchy** (`/tools/cbt/hierarchy`):
-   - Build exposure ladder to gradually face fears
-   - Interface exists in `db/types.ts` as `AnxietyHierarchyItem`
-   - Tracks SUDS ratings (0-100) before/during/after exposures
-   - Progressive desensitization approach
+### Phase 8C: Anxiety Hierarchy ✅ COMPLETE
+- **Routes**: `/tools/cbt/hierarchy`, `/tools/cbt/hierarchy/new`, `/tools/cbt/hierarchy/[id]`, `/tools/cbt/hierarchy/[id]/expose`
+- **Components**: HierarchyItemForm, HierarchyList, HierarchyDetail, ExposureLogForm, ExposureChart
+- **Features**:
+  - Create fear ladder ranked by SUDS (Subjective Units of Distress 0-100)
+  - 4-step item creation: Describe fear → Category → Current distress → Target goal
+  - Log exposure attempts: distress before/during/after + duration + notes
+  - Chart.js visualization showing habituation over time (three lines)
+  - Progress tracking with color-coded distress indicators (green/amber/red)
+  - Mark items complete when target reached
+  - Filterable list: All / Not Started / In Progress / Completed
+- **Pattern**: Hybrid (create=multi-step auto-save, log exposure=explicit save)
+- **Database**: `anxietyHierarchy` table with nested `exposureAttempts` array
+- **Critical**: Uses `addExposureAttempt()` helper to handle Svelte 5 proxy array spreading
 
-### Additional Features (Future)
-3. **Activities on Track Page**:
-   - Currently shows "Coming Soon"
-   - Unclear if this is duplicate of Plan page or different feature
-   - May track completed activities separate from planned activities
-   - Needs requirement clarification
-
-4. **Anxiety Episodes Tracking**:
+### Future Features (Post-Phase 8)
+1. **Anxiety Episodes Tracking**:
    - Interface exists in `db/types.ts` as `AnxietyEpisode`
    - Detailed episode logging with symptoms, interventions, BP correlation
    - Duration tracking, peak anxiety level, effectiveness ratings
    - Currently not accessible from UI
 
-5. **Enhanced Settings**:
-   - Will be partially implemented in Phase 7
+2. **Enhanced Settings**:
+   - Basic settings implemented in Phase 7
    - Advanced features (backup frequency, weekly goals) for later
 
 

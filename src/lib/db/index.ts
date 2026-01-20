@@ -459,5 +459,261 @@ export async function getMindfulnessMinutes(startDate: string, endDate: string):
   return sessions.reduce((total, session) => total + (session.durationActual || session.durationPlanned), 0);
 }
 
+// ============================================
+// ACTIVITIES TRACKING (Phase 8A)
+// ============================================
+
+/**
+ * Get activities for a date range
+ */
+export async function getActivities(startDate: string, endDate: string): Promise<Activity[]> {
+  return db.activities
+    .where('date')
+    .between(startDate, endDate, true, true)
+    .reverse()
+    .sortBy('timestamp');
+}
+
+/**
+ * Get recent activities
+ */
+export async function getRecentActivities(days: number = 30): Promise<Activity[]> {
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - days);
+  const startDateStr = startDate.toISOString().split('T')[0];
+
+  return db.activities
+    .where('date')
+    .aboveOrEqual(startDateStr)
+    .reverse()
+    .sortBy('timestamp');
+}
+
+/**
+ * Get activity statistics
+ */
+export async function getActivityStats(
+  startDate: string,
+  endDate: string
+): Promise<{
+  total: number;
+  totalMinutes: number;
+  byType: Record<string, number>;
+  byIntensity: Record<string, number>;
+  avgEnjoyment: number;
+  avgMastery: number;
+}> {
+  const activities = await getActivities(startDate, endDate);
+
+  if (activities.length === 0) {
+    return {
+      total: 0,
+      totalMinutes: 0,
+      byType: {},
+      byIntensity: {},
+      avgEnjoyment: 0,
+      avgMastery: 0
+    };
+  }
+
+  const totalMinutes = activities.reduce((sum, a) => sum + a.duration, 0);
+
+  const byType: Record<string, number> = {};
+  activities.forEach(a => {
+    byType[a.type] = (byType[a.type] || 0) + 1;
+  });
+
+  const byIntensity: Record<string, number> = {};
+  activities.forEach(a => {
+    if (a.intensity) {
+      byIntensity[a.intensity] = (byIntensity[a.intensity] || 0) + 1;
+    }
+  });
+
+  const withEnjoyment = activities.filter(a => a.enjoyment !== undefined);
+  const avgEnjoyment = withEnjoyment.length > 0
+    ? withEnjoyment.reduce((sum, a) => sum + (a.enjoyment || 0), 0) / withEnjoyment.length
+    : 0;
+
+  const withMastery = activities.filter(a => a.mastery !== undefined);
+  const avgMastery = withMastery.length > 0
+    ? withMastery.reduce((sum, a) => sum + (a.mastery || 0), 0) / withMastery.length
+    : 0;
+
+  return {
+    total: activities.length,
+    totalMinutes,
+    byType,
+    byIntensity,
+    avgEnjoyment: Math.round(avgEnjoyment * 10) / 10,
+    avgMastery: Math.round(avgMastery * 10) / 10
+  };
+}
+
+// ============================================
+// BEHAVIORAL EXPERIMENTS (Phase 8B)
+// ============================================
+
+/**
+ * Get behavioral experiments for date range
+ */
+export async function getBehavioralExperiments(startDate: string, endDate: string): Promise<BehavioralExperiment[]> {
+  return db.behavioralExperiments
+    .where('date')
+    .between(startDate, endDate, true, true)
+    .reverse()
+    .sortBy('createdAt');
+}
+
+/**
+ * Get incomplete experiments
+ */
+export async function getIncompleteExperiments(): Promise<BehavioralExperiment[]> {
+  return db.behavioralExperiments
+    .where('completed')
+    .equals(0)
+    .reverse()
+    .sortBy('createdAt');
+}
+
+/**
+ * Get experiment by ID
+ */
+export async function getExperimentById(id: number): Promise<BehavioralExperiment | undefined> {
+  return db.behavioralExperiments.get(id);
+}
+
+/**
+ * Get experiment statistics
+ */
+export async function getExperimentStats(
+  startDate: string,
+  endDate: string
+): Promise<{
+  total: number;
+  completed: number;
+  avgBeliefReduction: number;
+  avgPredictionAccuracy: number;
+}> {
+  const experiments = await getBehavioralExperiments(startDate, endDate);
+  const completed = experiments.filter(e => e.completed);
+
+  if (completed.length === 0) {
+    return {
+      total: experiments.length,
+      completed: 0,
+      avgBeliefReduction: 0,
+      avgPredictionAccuracy: 0
+    };
+  }
+
+  const beliefReductions = completed
+    .filter(e => e.beliefStrengthAfter !== undefined)
+    .map(e => e.beliefStrength - (e.beliefStrengthAfter || 0));
+
+  const avgBeliefReduction = beliefReductions.length > 0
+    ? beliefReductions.reduce((sum, r) => sum + r, 0) / beliefReductions.length
+    : 0;
+
+  return {
+    total: experiments.length,
+    completed: completed.length,
+    avgBeliefReduction: Math.round(avgBeliefReduction),
+    avgPredictionAccuracy: 0 // Could be calculated based on outcome vs prediction
+  };
+}
+
+// ============================================
+// ANXIETY HIERARCHY (Phase 8C)
+// ============================================
+
+/**
+ * Get all anxiety hierarchy items
+ */
+export async function getAnxietyHierarchy(): Promise<AnxietyHierarchyItem[]> {
+  return db.anxietyHierarchy
+    .orderBy('currentDistress')
+    .reverse()
+    .toArray();
+}
+
+/**
+ * Get hierarchy item by ID
+ */
+export async function getHierarchyItemById(id: number): Promise<AnxietyHierarchyItem | undefined> {
+  return db.anxietyHierarchy.get(id);
+}
+
+/**
+ * Add exposure attempt to hierarchy item
+ */
+export async function addExposureAttempt(itemId: number, exposure: ExposureAttempt): Promise<void> {
+  const item = await db.anxietyHierarchy.get(itemId);
+  if (!item) {
+    throw new Error('Hierarchy item not found');
+  }
+
+  // CRITICAL: Spread array to avoid Svelte 5 proxy issue
+  const updatedAttempts = [...item.exposureAttempts, exposure];
+
+  await db.anxietyHierarchy.update(itemId, {
+    exposureAttempts: updatedAttempts,
+    currentDistress: exposure.distressAfter
+  });
+}
+
+/**
+ * Update hierarchy item distress
+ */
+export async function updateHierarchyDistress(itemId: number, newDistress: number): Promise<void> {
+  await db.anxietyHierarchy.update(itemId, {
+    currentDistress: newDistress
+  });
+}
+
+/**
+ * Get hierarchy statistics
+ */
+export async function getHierarchyStats(): Promise<{
+  total: number;
+  completed: number;
+  inProgress: number;
+  avgDistressReduction: number;
+  totalExposures: number;
+}> {
+  const items = await db.anxietyHierarchy.toArray();
+
+  if (items.length === 0) {
+    return {
+      total: 0,
+      completed: 0,
+      inProgress: 0,
+      avgDistressReduction: 0,
+      totalExposures: 0
+    };
+  }
+
+  const completed = items.filter(i => i.isComplete).length;
+  const inProgress = items.filter(i => !i.isComplete && i.exposureAttempts.length > 0).length;
+
+  const distressReductions = items
+    .filter(i => i.exposureAttempts.length > 0)
+    .map(i => i.initialDistress - i.currentDistress);
+
+  const avgDistressReduction = distressReductions.length > 0
+    ? distressReductions.reduce((sum, r) => sum + r, 0) / distressReductions.length
+    : 0;
+
+  const totalExposures = items.reduce((sum, i) => sum + i.exposureAttempts.length, 0);
+
+  return {
+    total: items.length,
+    completed,
+    inProgress,
+    avgDistressReduction: Math.round(avgDistressReduction),
+    totalExposures
+  };
+}
+
 // Export database instance as default
 export default db;

@@ -60,8 +60,8 @@
 			</div>
 		</a>
 
-		<!-- Activities (coming soon) -->
-		<div class="card p-4 opacity-60">
+		<!-- Activities -->
+		<a href="{base}/track/activities" class="card card-hover p-4">
 			<div class="flex items-center gap-4">
 				<div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
 					<svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,9 +75,12 @@
 				</div>
 				<div class="flex-1">
 					<h2 class="font-semibold text-gray-900">Activities</h2>
-					<p class="text-sm text-gray-600">Coming soon</p>
+					<p class="text-sm text-gray-600">Log completed exercises and activities</p>
 				</div>
+				<svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+				</svg>
 			</div>
-		</div>
+		</a>
 	</div>
 </div>

@@ -94,9 +94,9 @@
 			</svg>
 		</a>
 
-		<!-- Behavioral Experiments (coming soon) -->
-		<div class="tool-card tool-card-disabled">
-			<div class="tool-icon" style="background-color: #e4e4e7">
+		<!-- Behavioral Experiments -->
+		<a href="{base}/tools/cbt/experiment" class="tool-card">
+			<div class="tool-icon" style="background-color: #fef3c7">
 				<span class="tool-emoji">🔬</span>
 			</div>
 			<div class="tool-content">
@@ -104,13 +104,24 @@
 				<p class="tool-description">
 					Test your beliefs with real-world experiments
 				</p>
-				<span class="coming-soon-badge">Coming Soon</span>
 			</div>
-		</div>
+			<svg
+				class="tool-chevron"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 20 20"
+				fill="currentColor"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+					clip-rule="evenodd"
+				/>
+			</svg>
+		</a>
 
-		<!-- Anxiety Hierarchy (coming soon) -->
-		<div class="tool-card tool-card-disabled">
-			<div class="tool-icon" style="background-color: #e4e4e7">
+		<!-- Anxiety Hierarchy -->
+		<a href="{base}/tools/cbt/hierarchy" class="tool-card">
+			<div class="tool-icon" style="background-color: #dbeafe">
 				<span class="tool-emoji">📊</span>
 			</div>
 			<div class="tool-content">
@@ -118,9 +129,20 @@
 				<p class="tool-description">
 					Build an exposure ladder to gradually face your fears
 				</p>
-				<span class="coming-soon-badge">Coming Soon</span>
 			</div>
-		</div>
+			<svg
+				class="tool-chevron"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 20 20"
+				fill="currentColor"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+					clip-rule="evenodd"
+				/>
+			</svg>
+		</a>
 	</div>
 
 	<!-- Back to tools -->
