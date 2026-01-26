@@ -11,7 +11,7 @@
 	}
 
 	function handleDone() {
-		goto('/');
+		goto(`${base}/`);
 	}
 </script>
 
