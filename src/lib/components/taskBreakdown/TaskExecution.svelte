@@ -7,6 +7,7 @@
 	import { base } from '$app/paths';
 	import { db } from '$lib/db';
 	import type { TaskBreakdown } from '$lib/db/types';
+	import VisualTimer from '$lib/components/time/VisualTimer.svelte';
 
 	interface Props {
 		breakdownId: number;
@@ -17,10 +18,8 @@
 	let breakdown = $state<TaskBreakdown | undefined>(undefined);
 	let loading = $state(true);
 	let showTimer = $state(false);
-	let timerMinutes = $state(5);
-	let timerSeconds = $state(0);
-	let timerActive = $state(false);
-	let timerInterval: ReturnType<typeof setInterval> | null = null;
+	let visualTimerRef = $state<VisualTimer | null>(null);
+	let timerComplete = $state(false);
 
 	// Load breakdown
 	onMount(async () => {
@@ -34,10 +33,6 @@
 			breakdown = { ...breakdown, status: 'in-progress' };
 		}
 		loading = false;
-
-		return () => {
-			if (timerInterval) clearInterval(timerInterval);
-		};
 	});
 
 	// Current step info
@@ -77,45 +72,20 @@
 		// Reload
 		breakdown = await db.taskBreakdowns.get(breakdownId);
 
-		// Stop timer if running
-		stopTimer();
+		// Reset timer for next step
+		showTimer = false;
+		timerComplete = false;
 	}
 
 	// Timer functions
-	function startTimer() {
-		if (currentStepData?.estimatedDuration) {
-			timerMinutes = currentStepData.estimatedDuration;
-			timerSeconds = 0;
-		}
-		timerActive = true;
-
-		timerInterval = setInterval(() => {
-			if (timerSeconds === 0) {
-				if (timerMinutes === 0) {
-					stopTimer();
-					return;
-				}
-				timerMinutes--;
-				timerSeconds = 59;
-			} else {
-				timerSeconds--;
-			}
-		}, 1000);
-	}
-
-	function stopTimer() {
-		if (timerInterval) {
-			clearInterval(timerInterval);
-			timerInterval = null;
-		}
-		timerActive = false;
+	function handleTimerComplete() {
+		timerComplete = true;
 	}
 
 	function resetTimer() {
-		stopTimer();
-		if (currentStepData?.estimatedDuration) {
-			timerMinutes = currentStepData.estimatedDuration;
-			timerSeconds = 0;
+		timerComplete = false;
+		if (visualTimerRef) {
+			visualTimerRef.reset();
 		}
 	}
 
@@ -195,28 +165,35 @@
 		{#if currentStepData?.estimatedDuration}
 			<div class="timer-section">
 				{#if !showTimer}
-					<button onclick={() => showTimer = true} class="btn-link">
-						+ Start timer
+					<button onclick={() => { showTimer = true; timerComplete = false; }} class="btn-link">
+						+ Use timer ({currentStepData.estimatedDuration}m)
 					</button>
 				{:else}
 					<div class="timer-display">
-						<div class="timer-value">
-							{String(timerMinutes).padStart(2, '0')}:{String(timerSeconds).padStart(2, '0')}
+						<div class="timer-visual">
+							<VisualTimer
+								bind:this={visualTimerRef}
+								duration={currentStepData.estimatedDuration * 60}
+								size="lg"
+								autoStart={true}
+								onComplete={handleTimerComplete}
+							/>
 						</div>
+
+						{#if timerComplete}
+							<div class="timer-complete-message">
+								Time's up! Ready to move on?
+							</div>
+						{/if}
+
 						<div class="timer-controls">
-							{#if !timerActive}
-								<button onclick={startTimer} class="btn-secondary btn-sm">
-									Start
-								</button>
-							{:else}
-								<button onclick={stopTimer} class="btn-secondary btn-sm">
-									Pause
-								</button>
-							{/if}
+							<button onclick={() => visualTimerRef?.isActive() ? visualTimerRef?.pause() : visualTimerRef?.start()} class="btn-secondary btn-sm">
+								{#if visualTimerRef?.isActive()}Pause{:else}Resume{/if}
+							</button>
 							<button onclick={resetTimer} class="btn-secondary btn-sm">
 								Reset
 							</button>
-							<button onclick={() => { stopTimer(); showTimer = false; }} class="btn-link text-sm">
+							<button onclick={() => { showTimer = false; }} class="btn-link text-sm">
 								Hide
 							</button>
 						</div>
@@ -336,12 +313,24 @@
 		padding: 1.5rem;
 	}
 
-	.timer-value {
-		font-size: 3rem;
-		font-weight: 700;
-		color: #1f2937;
-		font-family: 'Courier New', monospace;
+	.timer-visual {
+		display: flex;
+		justify-content: center;
 		margin-bottom: 1rem;
+	}
+
+	.timer-complete-message {
+		text-align: center;
+		font-size: 1rem;
+		font-weight: 600;
+		color: #14b8a6;
+		margin-bottom: 1rem;
+		animation: pulse 1.5s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.6; }
 	}
 
 	.timer-controls {

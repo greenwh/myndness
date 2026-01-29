@@ -8,6 +8,8 @@
 	import ActivityLibrary from '$lib/components/activities/ActivityLibrary.svelte';
 	import RoutineTimeline from '$lib/components/routines/RoutineTimeline.svelte';
 	import TransitionCountdown from '$lib/components/routines/TransitionCountdown.svelte';
+	import TimeRemaining from '$lib/components/time/TimeRemaining.svelte';
+	import HyperfocusAlert from '$lib/components/time/HyperfocusAlert.svelte';
 
 	// Today's date
 	const today = new Date();
@@ -18,6 +20,7 @@
 	let selectedTimeBlock = $state<TimeBlock>('morning');
 	let plannerRef = $state<ActivityPlanner | null>(null);
 	let plannedActivities = $state<PlannedActivity[]>([]);
+	let currentActivityName = $state<string | undefined>(undefined);
 
 	// Load activities for timeline
 	onMount(async () => {
@@ -29,6 +32,20 @@
 			.where('date')
 			.equals(todayStr)
 			.toArray();
+
+		// Find current in-progress activity for hyperfocus tracking
+		const hour = new Date().getHours();
+		let currentBlock: TimeBlock;
+		if (hour < 12) currentBlock = 'morning';
+		else if (hour < 17) currentBlock = 'afternoon';
+		else currentBlock = 'evening';
+
+		const currentBlockActivities = plannedActivities.filter(
+			a => a.timeBlock === currentBlock && !a.completed
+		);
+		currentActivityName = currentBlockActivities.length > 0
+			? currentBlockActivities[0].activity
+			: undefined;
 	}
 
 	// Open library for a specific time block
@@ -75,6 +92,9 @@
 		</div>
 	</header>
 
+	<!-- Time Remaining Widget -->
+	<TimeRemaining activities={plannedActivities} />
+
 	<!-- Transition Warning -->
 	{#if plannedActivities.length > 0}
 		<TransitionCountdown activities={plannedActivities} warningMinutes={15} />
@@ -83,6 +103,15 @@
 	<!-- Visual Timeline -->
 	{#if plannedActivities.length > 0}
 		<RoutineTimeline activities={plannedActivities} />
+	{/if}
+
+	<!-- Hyperfocus Alert (tracks current activity) -->
+	{#if currentActivityName}
+		<HyperfocusAlert
+			activityName={currentActivityName}
+			triggerMinutes={60}
+			extendMinutes={30}
+		/>
 	{/if}
 
 	<!-- Activity Planner -->

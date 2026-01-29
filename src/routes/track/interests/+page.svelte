@@ -143,7 +143,9 @@
 				<div class="interest-card" style="border-left: 4px solid {getCategoryColor(interest.category)}">
 					<div class="interest-header">
 						<div>
-							<h3 class="interest-name">{interest.name}</h3>
+							<a href="{base}/track/interests/{interest.id}" class="interest-name-link">
+								<h3 class="interest-name">{interest.name}</h3>
+							</a>
 							<span class="interest-category" style="color: {getCategoryColor(interest.category)}">
 								{interest.category}
 							</span>
@@ -181,15 +183,12 @@
 					</div>
 
 					<div class="interest-actions">
+						<a href="{base}/track/interests/{interest.id}" class="btn-secondary btn-sm">
+							View Details
+						</a>
 						<a href="{base}/track/interests/{interest.id}/log" class="btn-primary btn-sm">
 							Log Session
 						</a>
-						<button
-							onclick={() => toggleActive(interest.id!, interest.currentlyActive)}
-							class="btn-secondary btn-sm"
-						>
-							{interest.currentlyActive ? 'Pause' : 'Resume'}
-						</button>
 					</div>
 				</div>
 			{/each}
@@ -270,10 +269,19 @@
 		gap: 1rem;
 	}
 
+	.interest-name-link {
+		text-decoration: none;
+	}
+
+	.interest-name-link:hover .interest-name {
+		color: #14b8a6;
+	}
+
 	.interest-name {
 		font-size: 1.25rem;
 		font-weight: 700;
 		color: #1f2937;
+		transition: color 0.2s;
 	}
 
 	.interest-category {
