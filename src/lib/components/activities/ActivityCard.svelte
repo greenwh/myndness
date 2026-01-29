@@ -10,6 +10,8 @@
 		onComplete?: (id: number) => void;
 		onRate?: (id: number) => void;
 		onRemove?: (id: number) => void;
+		exceedsCapacity?: boolean;
+		remainingSpoons?: number;
 	}
 
 	let {
@@ -19,7 +21,9 @@
 		onAdd,
 		onComplete,
 		onRate,
-		onRemove
+		onRemove,
+		exceedsCapacity = false,
+		remainingSpoons
 	}: Props = $props();
 
 	// Category colors and labels
@@ -36,9 +40,17 @@
 	const name = $derived(activity?.activity || libraryItem?.name || '');
 	const category = $derived(activity?.category || libraryItem?.category || 'pleasure');
 	const duration = $derived(activity?.estimatedDuration || libraryItem?.estimatedDuration);
+	const spoonCost = $derived(activity?.spoonCost || libraryItem?.spoonCost);
 	const description = $derived(libraryItem?.description);
 	const isCompleted = $derived(activity?.completed || false);
 	const config = $derived(categoryConfig[category]);
+
+	// Get spoon cost color
+	function getSpoonCostColor(cost: number): string {
+		if (cost <= 3) return 'bg-green-100 text-green-700';
+		if (cost <= 6) return 'bg-amber-100 text-amber-700';
+		return 'bg-red-100 text-red-700';
+	}
 
 	// Handle add to planner
 	function handleAdd() {
@@ -95,16 +107,28 @@
 
 		<!-- Activity content -->
 		<div class="flex-1 min-w-0">
-			<div class="flex items-center gap-2 mb-1">
+			<div class="flex items-center gap-2 mb-1 flex-wrap">
 				<span class="badge {config.bg} {config.color}">{config.label}</span>
 				{#if duration}
 					<span class="text-xs text-gray-500">{duration} min</span>
+				{/if}
+				{#if spoonCost}
+					<span class="badge {getSpoonCostColor(spoonCost)} text-xs font-semibold">
+						{spoonCost} {spoonCost === 1 ? 'spoon' : 'spoons'}
+					</span>
 				{/if}
 			</div>
 
 			<h3 class="font-medium text-gray-900 {isCompleted ? 'line-through' : ''}">
 				{name}
 			</h3>
+
+			<!-- Capacity warning -->
+			{#if mode === 'library' && exceedsCapacity && remainingSpoons !== undefined}
+				<p class="text-xs text-amber-600 mt-1 font-medium">
+					⚠️ This costs {spoonCost} spoons, you have {remainingSpoons} remaining
+				</p>
+			{/if}
 
 			{#if description && mode === 'library'}
 				<p class="text-sm text-gray-500 mt-1">{description}</p>

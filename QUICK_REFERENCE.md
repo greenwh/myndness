@@ -20,21 +20,45 @@ Quick guide for common tasks and features.
 ### Log Mood (1-2 min)
 Track → Mood → Rate mood & anxiety → Select emotion → Save
 
+### Assess Energy/Spoons (30 sec)
+Track → Energy → Rate 0-10 spoons → Optional: sleep quality → Save
+
+**When**: Every morning to set daily capacity
+
 ### Log Blood Pressure (30 sec)
 Track → BP → Enter systolic/diastolic → Save
 
 ### Log Exercise (1-2 min)
 Track → Activities → Type, duration, intensity → Save
 
+### Track Special Interest Time (1 min)
+Track → Interests → Select interest → Log Session → Duration & type → Save
+
+**When**: After engaging with special interest (positive tracking, no guilt)
+
 ---
 
 ## 📅 Planning Your Day
 
+### Use a Routine Template (30 sec)
+Plan → Templates → Choose template → "Apply to Today"
+
+**When**: Don't want to plan from scratch. Templates: Weekday, Weekend, Low Energy Day
+
 ### Schedule Activities (2-3 min)
 Plan → Today → "+ Plan Activity" → Select from library → Add to plan
 
+**Note**: Activity library shows spoon cost (1-10). Filter by Low/Medium/High energy.
+
 ### Complete Activities
 Plan → Today → ✓ Check off completed → Optional: add notes
+
+### Break Down Overwhelming Task (3-5 min)
+Tools → Task Breakdown → New → Name task → Add steps → Review → Start
+
+**When**: Task feels too big to start. Templates: Clean kitchen, Do laundry, Morning routine, Write email
+
+**Then**: Execute ONE step at a time (optional timer per step)
 
 ---
 
@@ -115,6 +139,16 @@ Settings → Reduced Motion → Toggle on → Auto-saves
 
 ## 🔢 Quick Numbers
 
+### Spoon Scale (Energy Capacity)
+- **0-3**: Exhausted, very low energy
+- **4-7**: Moderate capacity, typical day
+- **8-10**: Energized, high capacity
+
+### Spoon Cost (Activity Energy)
+- **1-3 spoons**: Low energy (passive, restorative like music, TV, tea)
+- **4-6 spoons**: Medium energy (light tasks, organizing, puzzles)
+- **7-10 spoons**: High energy (social, physical, high executive function)
+
 ### SUDS Scale (Subjective Units of Distress)
 - **0-33**: Low distress (green)
 - **34-66**: Moderate distress (amber)
@@ -170,18 +204,25 @@ Settings → Clear All Data → Confirm
 ## 🎯 Daily Routine Examples
 
 ### Minimal (5-10 min/day)
-- Morning: Log mood
+- Morning: Assess energy (spoons), log mood
 - Evening: Log mood, check off 1-2 activities
 
 ### Standard (15-20 min/day)
-- Morning: Log mood, plan 3 activities
+- Morning: Assess energy, log mood, use routine template OR plan 3 activities
 - Midday: 4-7-8 breathing if needed
 - Evening: Log mood, check off activities, 5-min meditation
 
 ### Comprehensive (30-45 min/day)
-- Morning: Log mood + BP, plan 5 activities, 10-min meditation
-- Midday: Complete activities, log any exercises, breathing if needed
-- Evening: Log mood + BP, thought record if upset, body scan, review insights weekly
+- Morning: Assess energy, log mood + BP, use template OR plan 5 activities, 10-min meditation
+- Midday: Complete activities, log exercises, log special interest sessions
+- Evening: Log mood + BP, thought record if upset, body scan
+- Weekly: Review insights, export data, update routine templates
+
+### Low Energy Day (5 min total)
+- Morning: Assess energy (likely low spoons)
+- Apply "Low Energy Day" template OR filter activities by "Low" (1-3 spoons)
+- Complete what you can, rest without guilt
+- Optional: Log special interest time as "time well spent"
 
 ---
 
@@ -190,6 +231,10 @@ Settings → Clear All Data → Confirm
 | Want to... | Go to... |
 |------------|----------|
 | Calm down quickly | Red crisis button OR Tools → Breathing |
+| Check my energy today | Dashboard (spoons widget) OR Track → Energy |
+| Break down big task | Tools → Task Breakdown → New |
+| Use routine template | Plan → Templates → Apply |
+| Track special interest | Track → Interests → Select → Log Session |
 | Challenge a thought | Tools → CBT → Thought Record |
 | Test a belief | Tools → CBT → Experiments |
 | Face a fear | Tools → CBT → Hierarchy |
@@ -198,10 +243,10 @@ Settings → Clear All Data → Confirm
 | Log exercise | Track → Activities |
 | Plan my day | Plan → Today |
 | Browse activities | Plan → Library |
+| Filter by energy level | Plan → Library → Energy filter (Low/Med/High) |
 | Meditate | Tools → Mindfulness → Timer |
 | Guided practice | Tools → Mindfulness → (Breath/Body Scan) |
-| Tai chi | Tools → Movement → Tai Chi |
-| Stretch | Tools → Movement → Stretching |
+| See visual timeline | Plan → Today (shows day at a glance) |
 | See progress | Insights → Dashboard |
 | Export data | Insights → Export |
 | Adjust settings | Settings (gear icon) |

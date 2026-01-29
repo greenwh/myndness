@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { db } from '$lib/db';
-	import type { ActivityLibraryItem, ActivityCategory, TimeBlock } from '$lib/db/types';
+	import { db, getTodayEnergyLog } from '$lib/db';
+	import type { ActivityLibraryItem, ActivityCategory, TimeBlock, EnergyLog } from '$lib/db/types';
 	import ActivityCard from './ActivityCard.svelte';
 
 	interface Props {
@@ -14,13 +14,16 @@
 
 	// State
 	let activities = $state<ActivityLibraryItem[]>([]);
+	let energyLog = $state<EnergyLog | undefined>(undefined);
 	let selectedCategory = $state<ActivityCategory | 'all'>('all');
+	let selectedEnergyLevel = $state<'all' | 'low' | 'medium' | 'high'>('all');
 	let searchQuery = $state('');
 	let isLoading = $state(true);
 	let showCustomForm = $state(false);
 	let customName = $state('');
 	let customCategory = $state<ActivityCategory>('pleasure');
 	let customDuration = $state(30);
+	let customSpoonCost = $state(5);
 
 	// Categories for filter
 	const categories: { value: ActivityCategory | 'all'; label: string }[] = [
@@ -33,6 +36,14 @@
 		{ value: 'pleasure', label: 'Pleasure' }
 	];
 
+	// Energy level filters
+	const energyLevels: { value: 'all' | 'low' | 'medium' | 'high'; label: string; range: string }[] = [
+		{ value: 'all', label: 'All Energy', range: '' },
+		{ value: 'low', label: 'Low (1-3)', range: '1-3 spoons' },
+		{ value: 'medium', label: 'Medium (4-6)', range: '4-6 spoons' },
+		{ value: 'high', label: 'High (7-10)', range: '7-10 spoons' }
+	];
+
 	// Filtered activities (use toSorted to avoid mutating $state)
 	const filteredActivities = $derived(() => {
 		let result = activities;
@@ -40,6 +51,17 @@
 		// Filter by category
 		if (selectedCategory !== 'all') {
 			result = result.filter((a) => a.category === selectedCategory);
+		}
+
+		// Filter by energy level
+		if (selectedEnergyLevel !== 'all') {
+			result = result.filter((a) => {
+				const cost = a.spoonCost || 5; // Default to medium if not set
+				if (selectedEnergyLevel === 'low') return cost >= 1 && cost <= 3;
+				if (selectedEnergyLevel === 'medium') return cost >= 4 && cost <= 6;
+				if (selectedEnergyLevel === 'high') return cost >= 7 && cost <= 10;
+				return true;
+			});
 		}
 
 		// Filter by search
@@ -62,12 +84,19 @@
 		});
 	});
 
+	// Check if activity exceeds remaining spoons
+	function exceedsCapacity(spoonCost?: number): boolean {
+		if (!energyLog || !spoonCost) return false;
+		return spoonCost > energyLog.spoonsRemaining;
+	}
+
 	// Load activities on mount
 	onMount(async () => {
 		if (!browser) return;
 
 		try {
 			activities = await db.activityLibrary.toArray();
+			energyLog = await getTodayEnergyLog();
 		} catch (error) {
 			console.error('Failed to load activity library:', error);
 		} finally {
@@ -91,6 +120,7 @@
 				name: customName.trim(),
 				category: customCategory,
 				estimatedDuration: customDuration,
+				spoonCost: customSpoonCost,
 				isDefault: false,
 				timesCompleted: 0
 			};
@@ -108,6 +138,7 @@
 
 			// Reset form
 			customName = '';
+			customSpoonCost = 5;
 			showCustomForm = false;
 		} catch (error) {
 			console.error('Failed to add custom activity:', error);
@@ -139,20 +170,60 @@
 		</svg>
 	</div>
 
+	<!-- Energy capacity banner -->
+	{#if energyLog}
+		<div class="card p-3 bg-teal-50 border-teal-200">
+			<p class="text-sm text-gray-700">
+				<span class="font-semibold text-teal-700">{energyLog.spoonsRemaining} spoons</span> remaining today
+				{#if energyLog.spoonsRemaining <= 3}
+					<span class="text-amber-600 ml-1">(Low energy - consider easier activities)</span>
+				{/if}
+			</p>
+		</div>
+	{/if}
+
+	<!-- Energy level filters -->
+	{#if energyLog}
+		<div>
+			<label class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2 block">
+				Filter by Energy Level
+			</label>
+			<div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+				{#each energyLevels as level}
+					<button
+						type="button"
+						onclick={() => (selectedEnergyLevel = level.value)}
+						class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors
+							{selectedEnergyLevel === level.value
+							? 'bg-teal-600 text-white'
+							: 'bg-gray-100 text-gray-600 hover:bg-gray-200'}"
+					>
+						{level.label}
+					</button>
+				{/each}
+			</div>
+		</div>
+	{/if}
+
 	<!-- Category filters -->
-	<div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
-		{#each categories as cat}
-			<button
-				type="button"
-				onclick={() => (selectedCategory = cat.value)}
-				class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors
-					{selectedCategory === cat.value
-					? 'bg-primary-600 text-white'
-					: 'bg-gray-100 text-gray-600 hover:bg-gray-200'}"
-			>
-				{cat.label}
-			</button>
-		{/each}
+	<div>
+		<label class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2 block">
+			Filter by Category
+		</label>
+		<div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+			{#each categories as cat}
+				<button
+					type="button"
+					onclick={() => (selectedCategory = cat.value)}
+					class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors
+						{selectedCategory === cat.value
+						? 'bg-primary-600 text-white'
+						: 'bg-gray-100 text-gray-600 hover:bg-gray-200'}"
+				>
+					{cat.label}
+				</button>
+			{/each}
+		</div>
 	</div>
 
 	<!-- Activity list -->
@@ -190,6 +261,8 @@
 					libraryItem={item}
 					mode="library"
 					onAdd={handleAddActivity}
+					exceedsCapacity={exceedsCapacity(item.spoonCost)}
+					remainingSpoons={energyLog?.spoonsRemaining}
 				/>
 			{/each}
 		</div>
@@ -249,6 +322,24 @@
 						step="5"
 						class="input"
 					/>
+				</div>
+
+				<div>
+					<label for="custom-spoons" class="label">Energy Cost (spoons)</label>
+					<input
+						id="custom-spoons"
+						type="range"
+						bind:value={customSpoonCost}
+						min="1"
+						max="10"
+						step="1"
+						class="w-full"
+					/>
+					<div class="flex justify-between text-xs text-gray-500 mt-1">
+						<span>Low (1)</span>
+						<span class="font-semibold text-teal-600 text-base">{customSpoonCost}</span>
+						<span>High (10)</span>
+					</div>
 				</div>
 
 				<div class="flex gap-3">

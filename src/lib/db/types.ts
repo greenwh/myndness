@@ -111,27 +111,28 @@ export interface PlannedActivity {
   id?: number;
   date: string;                    // YYYY-MM-DD
   createdAt: string;               // ISO datetime
-  
+
   // Activity details
   activity: string;                // Description
   category: ActivityCategory;
   timeBlock: TimeBlock;
   estimatedDuration?: number;      // Minutes
-  
+  spoonCost?: number;              // 1-10 energy cost (autism productivity)
+
   // Completion tracking
   completed: boolean;
   completedAt?: string;            // ISO datetime
   actualDuration?: number;         // Minutes
-  
+
   // Ratings (filled after completion)
   enjoyment?: number;              // 0-10
   mastery?: number;                // 0-10
   moodBefore?: number;             // 1-10
   moodAfter?: number;              // 1-10
-  
+
   // Linking
   linkedExperimentId?: number;     // If this is a behavioral experiment
-  
+
   notes?: string;
 }
 
@@ -151,6 +152,7 @@ export interface ActivityLibraryItem {
   category: ActivityCategory;
   description?: string;
   estimatedDuration?: number;      // Minutes
+  spoonCost?: number;              // 1-10 energy cost (autism productivity)
   isDefault: boolean;              // Pre-populated vs user-added
   timesCompleted: number;
   averageEnjoyment?: number;
@@ -360,6 +362,156 @@ export type MindfulnessPracticeType =
   | 'open-awareness'
   | 'walking-meditation'
   | 'sound-awareness'
+  | 'other';
+
+// ============================================
+// AUTISM PRODUCTIVITY FEATURES
+// ============================================
+
+export interface EnergyLog {
+  id?: number;
+  date: string;                    // YYYY-MM-DD
+  timestamp: string;               // ISO datetime
+
+  // Morning assessment
+  morningSpoons: number;           // 0-10 daily capacity
+  sleepQuality?: number;           // 0-10 how well rested
+
+  // Tracking
+  spoonsUsed: number;              // Running total
+  spoonsRemaining: number;         // morningSpoons - spoonsUsed
+
+  notes?: string;
+}
+
+export interface TaskBreakdown {
+  id?: number;
+  createdAt: string;               // ISO datetime
+
+  // Task details
+  taskName: string;                // Overall task name
+  description?: string;            // Optional context
+
+  // Steps
+  steps: TaskBreakdownStep[];
+
+  // Execution tracking
+  status: 'draft' | 'ready' | 'in-progress' | 'completed' | 'abandoned';
+  currentStepIndex: number;        // Which step are we on (0-based)
+
+  // Template
+  isTemplate: boolean;             // User or pre-seeded template
+  templateCategory?: string;       // e.g., 'household', 'communication', 'hygiene'
+  timesUsed?: number;              // If template, how many times executed
+
+  // Completion
+  startedAt?: string;              // When execution began
+  completedAt?: string;            // When finished
+
+  notes?: string;
+}
+
+export interface TaskBreakdownStep {
+  order: number;                   // Step sequence
+  description: string;             // What to do
+  estimatedDuration?: number;      // Minutes
+  completed: boolean;
+  completedAt?: string;            // ISO datetime
+}
+
+export interface RoutineTemplate {
+  id?: number;
+  createdAt: string;               // ISO datetime
+
+  // Template details
+  name: string;                    // e.g., "Weekday Morning", "Low Energy Day"
+  description?: string;
+  isDefault: boolean;              // Pre-seeded vs user-created
+
+  // Activities (stored as references or full definitions)
+  activities: RoutineActivitySlot[];
+
+  // Usage
+  tags?: string[];                 // e.g., ['weekday', 'high-energy']
+  timesUsed: number;
+  lastUsed?: string;               // YYYY-MM-DD
+
+  notes?: string;
+}
+
+export interface RoutineActivitySlot {
+  timeBlock: TimeBlock;            // morning/afternoon/evening
+  startTime?: string;              // HH:MM optional specific time
+  activity: string;                // Activity name
+  category: ActivityCategory;
+  estimatedDuration?: number;      // Minutes
+  spoonCost?: number;              // 1-10
+}
+
+export interface SpecialInterest {
+  id?: number;
+  createdAt: string;               // ISO datetime
+
+  // Interest details
+  name: string;                    // Name of the interest
+  category: InterestCategory;
+  description?: string;
+
+  // Status
+  startedDate: string;             // YYYY-MM-DD when interest began
+  currentlyActive: boolean;        // Still engaging with this interest
+  pausedDate?: string;             // If paused, when
+
+  // Impact tracking (calculated from sessions)
+  totalSessions?: number;
+  totalMinutes?: number;
+  avgMoodImpact?: number;          // Average mood improvement
+  avgEnergyImpact?: number;        // Average energy change
+
+  notes?: string;
+}
+
+export type InterestCategory =
+  | 'stem'           // Science, tech, engineering, math
+  | 'creative'       // Art, music, writing, crafts
+  | 'collection'     // Collecting items, organizing
+  | 'media'          // TV shows, movies, books, podcasts
+  | 'gaming'         // Video games, board games
+  | 'nature'         // Animals, plants, outdoors
+  | 'history'        // Historical topics, genealogy
+  | 'language'       // Languages, linguistics
+  | 'other';
+
+export interface InterestSession {
+  id?: number;
+  date: string;                    // YYYY-MM-DD
+  timestamp: string;               // ISO datetime
+
+  // Session details
+  interestId: number;              // Reference to SpecialInterest
+  duration: number;                // Minutes
+  sessionType: InterestSessionType;
+
+  // Mood/energy tracking
+  moodBefore?: number;             // 1-10
+  energyBefore?: number;           // 0-10 spoons
+  moodAfter?: number;              // 1-10
+  energyAfter?: number;            // 0-10 spoons
+
+  // Quality
+  engagement?: number;             // 0-10 how engaged were you
+  satisfaction?: number;           // 0-10 how satisfying
+
+  notes?: string;
+}
+
+export type InterestSessionType =
+  | 'research'       // Reading, watching videos, learning
+  | 'creating'       // Making something related to interest
+  | 'consuming'      // Enjoying content (watching, playing)
+  | 'organizing'     // Cataloging, sorting, arranging
+  | 'discussing'     // Talking about it, forums, communities
+  | 'practicing'     // Skill development, hands-on practice
   | 'other';
 
 // ============================================

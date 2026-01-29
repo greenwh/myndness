@@ -32,11 +32,11 @@
   - Build/deploy: GitHub Pages base path (/myndness) routing must work for deep links
   
 ### Quick Context
-- **What**: Mental wellness PWA for managing ADHD, GAD, MDD symptoms
-- **User**: 64yo male with pacemaker, needs accessible design
-- **Stack**: SvelteKit 2 + Svelte 5, Tailwind CSS, IndexedDB (Dexie), PWA
+- **What**: Mental wellness PWA for managing ADHD, GAD, MDD, and autism-related executive function challenges
+- **User**: 64yo male with ADHD, GAD, MDD, mild autism, pacemaker - needs accessible design + executive function support
+- **Stack**: SvelteKit 2 + Svelte 5, Tailwind CSS, IndexedDB (Dexie v2), PWA
 - **Live**: https://greenwh.github.io/myndness/
-- **Status File**: `/home/dad/.claude/plans/eager-popping-manatee.md`
+- **Latest**: Phase 9 - Autism Productivity Features (spoon theory, task breakdown, routines, special interests)
 
 ### Common Commands
 ```bash
@@ -66,6 +66,7 @@ git add -A && git commit -m "message" && git push origin main
 | Phase 8A | ✅ | Activities Tracking (exercise logger with ratings) |
 | Phase 8B | ✅ | Behavioral Experiments (test beliefs, track outcomes) |
 | Phase 8C | ✅ | Anxiety Hierarchy (exposure therapy ladder) |
+| Phase 9 | ✅ | Autism Productivity (spoon theory, task breakdown, routines, special interests) |
 
 ---
 
@@ -95,14 +96,21 @@ git add -A && git commit -m "message" && git push origin main
 /tools/mindfulness/breath   Breath awareness practice (5 min)
 /tools/mindfulness/body-scan Body scan meditation (5 or 15 min)
 /tools/mindfulness/history  Mindfulness session history
+/tools/breakdown            Task breakdown hub (autism productivity)
+/tools/breakdown/new        Create new breakdown
+/tools/breakdown/[id]       Execute breakdown step-by-step
 /track                      Track hub
 /track/mood                 Mood + anxiety logger
 /track/bp                   Blood pressure logger
+/track/energy               Energy/spoons assessment (autism productivity)
+/track/interests            Special interests hub (autism productivity)
+/track/interests/[id]/log   Log interest session
 /track/activities           Activities logger (exercise tracking)
 /track/activities/history   Activities history (filterable)
 /plan                       Plan hub (today's progress, week stats)
-/plan/today                 Daily activity planner
+/plan/today                 Daily activity planner (with timeline & countdown)
 /plan/library               Activity library browser
+/plan/templates             Routine templates (autism productivity)
 /insights                   Insights dashboard (charts, trends, streaks)
 /insights/export            Data export tool (CSV/JSON)
 /settings                   Placeholder
@@ -128,14 +136,19 @@ src/lib/components/
 │                    MoodCorrelations, StreakTracker
 ├── mindfulness/     MindfulnessTimer, MindfulnessDisplay, SessionTracker,
 │                    BreathAwareness, BodyScan, MindfulnessHistory
-└── mood/            MoodLogger, MoodSlider
+├── mood/            MoodLogger, MoodSlider
+├── energy/          EnergyAssessment, SpoonsWidget (autism productivity)
+├── taskBreakdown/   TaskBreakdownForm, TaskExecution (autism productivity)
+└── routines/        RoutineTimeline, TransitionCountdown (autism productivity)
 ```
 
-### Database (IndexedDB via Dexie)
-- **Types**: `src/lib/db/types.ts` - All interfaces
+### Database (IndexedDB via Dexie v2)
+- **Types**: `src/lib/db/types.ts` - All interfaces (17 tables)
 - **DB**: `src/lib/db/index.ts` - Dexie instance + helpers
-- **Active tables**: moodLogs, bpReadings, plannedActivities, activityLibrary, thoughtRecords, mindfulnessSessions, activities, behavioralExperiments, anxietyHierarchy
-- **30 pre-seeded activities** across 6 categories
+- **Core tables**: moodLogs, bpReadings, plannedActivities (+ spoonCost), activityLibrary (+ spoonCost), thoughtRecords, mindfulnessSessions, activities, behavioralExperiments, anxietyHierarchy
+- **Autism productivity tables (v2)**: energyLogs, taskBreakdowns, routineTemplates, specialInterests, interestSessions
+- **System**: anxietyEpisodes (future), userProfile, settings
+- **30+ pre-seeded activities** across 6 categories (all with spoonCost 1-10)
 - **Query helpers**:
   - Mood/BP: getMoodLogs(), getBPReadings()
   - Planning: getPlannedActivities(), getActivityLibraryByCategory()
@@ -143,6 +156,10 @@ src/lib/components/
   - Mindfulness: getMindfulnessSessions(), getMindfulnessMinutes()
   - Activities: getActivities(), getRecentActivities(), getActivityStats()
   - Experiments: getBehavioralExperiments(), getIncompleteExperiments(), getExperimentById(), getExperimentStats()
+  - Energy: getEnergyLogs(), getTodayEnergyLog(), getLatestEnergyLog()
+  - Task Breakdown: getTaskBreakdowns(), getTaskBreakdownTemplates(), getInProgressTaskBreakdowns()
+  - Routines: getRoutineTemplates(), getDefaultRoutineTemplates()
+  - Interests: getSpecialInterests(), getActiveSpecialInterests(), getInterestSessions(), getInterestSessionStats()
   - Hierarchy: getAnxietyHierarchy(), getHierarchyItemById(), addExposureAttempt(), getHierarchyStats()
 
 ---

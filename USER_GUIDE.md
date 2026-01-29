@@ -1,21 +1,26 @@
 # Myndness User Guide
 
-**Version 1.0** | Mental Wellness PWA for managing ADHD, GAD, and MDD symptoms
+**Version 2.0** | Mental Wellness PWA for managing ADHD, GAD, MDD, and autism-related executive function challenges
 
 ---
 
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
-2. [Crisis Tools](#crisis-tools)
-3. [Daily Tracking](#daily-tracking)
-4. [Activity Planning](#activity-planning)
-5. [CBT Tools](#cbt-tools)
-6. [Mindfulness](#mindfulness)
-7. [Movement & Exercise](#movement--exercise)
-8. [Insights & Progress](#insights--progress)
-9. [Settings](#settings)
-10. [Tips for Success](#tips-for-success)
+2. [Autism Productivity Features](#autism-productivity-features) **NEW**
+   - [Energy Management (Spoon Theory)](#energy-management-spoon-theory)
+   - [Task Breakdown Tool](#task-breakdown-tool)
+   - [Visual Routines & Transitions](#visual-routines--transitions)
+   - [Special Interests Tracking](#special-interests-tracking)
+3. [Crisis Tools](#crisis-tools)
+4. [Daily Tracking](#daily-tracking)
+5. [Activity Planning](#activity-planning)
+6. [CBT Tools](#cbt-tools)
+7. [Mindfulness](#mindfulness)
+8. [Movement & Exercise](#movement--exercise)
+9. [Insights & Progress](#insights--progress)
+10. [Settings](#settings)
+11. [Tips for Success](#tips-for-success)
 
 ---
 
@@ -44,6 +49,370 @@ The main navigation bar appears at the bottom (mobile) or side (desktop):
 - **Plan**: View and manage daily activities
 - **Tools**: Access CBT and mindfulness tools
 - **Insights**: View charts and progress reports
+
+---
+
+## Autism Productivity Features
+
+**New in Version 2.0**: Comprehensive support for autism-related executive function challenges
+
+### Overview
+
+These features address common autistic experiences that traditional productivity tools often miss:
+
+- **Fluctuating energy capacity** - Some days you can do everything, other days just existing is hard
+- **Task initiation difficulty** - Knowing what to do but unable to start
+- **Time blindness** - Hours pass unnoticed, transitions feel sudden
+- **Overwhelm from unstructured time** - Open-ended days create anxiety
+- **Special interests stigmatized** - "Wasting time" vs actually regulating and recovering
+
+The autism productivity features make the invisible visible: energy, time, task structure, and the value of special interests.
+
+---
+
+### Energy Management (Spoon Theory)
+
+**Why this exists**: Autistic individuals often experience unpredictable energy fluctuations. Some days you wake up with full capacity, other days every small task feels impossible. Traditional planners assume consistent energy levels, which sets you up for failure on low-energy days.
+
+Spoon theory provides a **concrete metaphor** for abstract energy capacity. Instead of "I don't know why I can't do this," it becomes "I have 3 spoons today and this task costs 5 spoons."
+
+#### Morning Energy Assessment
+
+**When to use**: Every morning, ideally within the first hour of waking
+
+**How to use**:
+1. Go to **Track → Energy**
+2. **Rate your spoon count** (0-10):
+   - **0-3**: Exhausted, survival mode, very low capacity
+   - **4-7**: Moderate energy, typical day for you
+   - **8-10**: Energized, high capacity, good day
+3. Optional: Rate **sleep quality** (helps identify patterns)
+4. Optional: Add **notes** about why energy is high/low today
+5. **Save** - Dashboard widget now shows your capacity
+
+**Why each spoon level matters**:
+- This isn't about "being lazy" - it's about **honest capacity assessment**
+- Planning 8 spoons worth of activities when you have 3 spoons creates failure and shame
+- Knowing you have 8 spoons helps you seize high-energy days for harder tasks
+
+#### Dashboard Spoons Widget
+
+**What it shows**:
+- **Remaining spoons** out of morning total
+- **Color-coded gauge**:
+  - 🟢 Green (>50% remaining): Good capacity left
+  - 🟠 Amber (25-50%): Moderate capacity, pace yourself
+  - 🔴 Red (<25%): Low capacity, prioritize rest
+
+**Why it's always visible**: You need this information when making decisions throughout the day. "Should I add another task?" Check your spoons first.
+
+#### Activity Spoon Costs
+
+**How activities are rated** (1-10 spoons):
+- **1-3 (Low)**: Passive, restorative activities
+  - Examples: Listening to music, watching familiar shows, having tea, petting animals
+  - Why low: Minimal cognitive load, no social demands, familiar/comforting
+- **4-6 (Medium)**: Moderate effort activities
+  - Examples: Light organizing, journaling, puzzles, gentle exercise, solo creative work
+  - Why medium: Some executive function needed, but manageable alone
+- **7-10 (High)**: High-demand activities
+  - Examples: Social interaction, phone calls, vigorous exercise, complex tasks, unfamiliar situations
+  - Why high: Multiple demands (social + cognitive, or high executive function, or high sensory input)
+
+**Why costs are shown**: So you can make informed choices. On a 3-spoon day, you can see at a glance which activities are realistic (1-3 cost) vs which will deplete you (7-10 cost).
+
+#### Energy-Based Activity Filtering
+
+**How to filter**:
+1. Go to **Plan → Library**
+2. If you've logged energy today, you'll see **Filter by Energy Level**:
+   - **Low (1-3 spoons)**: Only gentle, restorative activities
+   - **Medium (4-6 spoons)**: Moderate effort activities
+   - **High (7-10 spoons)**: All activities including high-demand
+3. Select filter to see only activities within your capacity
+
+**Why this matters**: On low-energy days, seeing the full library (including 10-spoon activities) is overwhelming and demoralizing. Filtering shows only what's realistic today.
+
+#### Capacity Warnings
+
+**What they are**: When planning activities, if their total spoon cost exceeds your remaining spoons, you'll see:
+- ⚠️ Warning badges on activities that exceed capacity
+- Alert text: "This costs 7 spoons, you have 3 remaining"
+
+**Why warnings, not blocks**: You're the expert on your body. Sometimes you want to push through. Sometimes you didn't count something that gave you energy back. The app warns but doesn't restrict.
+
+**The goal**: Reduce accidental over-scheduling. If you over-schedule knowingly, that's your choice. If you over-schedule unknowingly and then can't complete things, that creates shame and burnout.
+
+---
+
+### Task Breakdown Tool
+
+**Why this exists**: Executive dysfunction makes it hard to start tasks because they appear as overwhelming monoliths. "Clean the kitchen" feels impossible, but "Put 3 dishes in the dishwasher" feels doable. The gap between knowing you need to do something and being able to start is a real neurological barrier, not laziness.
+
+Breaking tasks into micro-steps **removes the initiation barrier**. Each step is small enough that your brain doesn't panic.
+
+#### When to Use Task Breakdown
+
+Use this tool when:
+- ✅ You know you need to do a task but can't start
+- ✅ The task feels overwhelming even though it's "simple"
+- ✅ You've been avoiding a task for days
+- ✅ You need structure but don't know where to begin
+- ✅ The task has multiple parts and you lose track
+
+Don't use this for:
+- ❌ Single-step tasks ("make coffee" - just do it)
+- ❌ Tasks you enjoy and want to do (no barrier to overcome)
+
+#### Creating a Task Breakdown
+
+**How to create**:
+1. Go to **Tools → Task Breakdown → New**
+2. **Step 1: Define Task**
+   - Enter task name (e.g., "Clean the kitchen")
+   - Optional: Add description for context
+   - Click **Next**
+3. **Step 2: Break Into Steps**
+   - Add individual steps in order:
+     - "Clear dishes from counter" - 5 min
+     - "Load dishwasher" - 10 min
+     - "Wipe counters" - 5 min
+     - "Clean stovetop" - 5 min
+     - "Sweep floor" - 5 min
+   - Each step should be **one specific action**
+   - Duration estimates are optional but help with time awareness
+   - Click **Next** when all steps added
+4. **Step 3: Review**
+   - See complete breakdown
+   - Optional: **Save as template** for reuse
+   - Click **Start Task** to begin execution
+
+**Why it auto-saves**: If you navigate away, your breakdown isn't lost. On low-executive-function days, you might not finish creating the breakdown in one sitting. That's fine - come back to it.
+
+#### Using Pre-Seeded Templates
+
+**Available templates**:
+- **Clean the kitchen** (6 steps, ~30 min)
+- **Do laundry** (5 steps, ~25 min + wait time)
+- **Morning routine** (7 steps, ~40 min)
+- **Write an email** (6 steps, ~15 min)
+
+**Why templates exist**: On low-energy days, even creating a breakdown can be too hard. Templates let you bypass that and get straight to execution.
+
+**How to use a template**:
+1. Go to **Tools → Task Breakdown**
+2. Find template in **Templates** section
+3. Click **Use**
+4. Starts immediately in execution mode
+
+#### Executing a Task Breakdown
+
+**Why execution is designed this way**: Traditional to-do lists show ALL steps at once, which recreates overwhelm. This execution view shows **one step at a time**, keeping focus narrow.
+
+**Execution screen**:
+- **Progress bar** at top (e.g., "Step 2 of 6")
+- **Current step** displayed large and centered
+- **Timer** (optional) - if step has estimated duration
+- **Large "Done" button** (60px height) - impossible to miss
+- **Exit** always available (progress saves)
+
+**How it works**:
+1. Read current step
+2. Do the step
+3. Click **Done** when finished
+4. Next step appears automatically
+5. Repeat until all steps complete
+6. **Success screen** celebrates completion
+
+**Why timer is optional**: Some people find timers motivating ("I can do anything for 5 minutes"). Others find timers stressful ("I'm not done and time is up"). Your choice.
+
+**Why one step at a time**: Your working memory might not hold all 6 steps. You don't need to remember what comes next - the app remembers for you. You just do the current step.
+
+---
+
+### Visual Routines & Transitions
+
+**Why this exists**: Time blindness and transition difficulty are common autistic traits. Without external structure, time feels fluid and unreliable. Transitions feel sudden even when "expected" because the passage of time wasn't felt.
+
+These tools make time and transitions **visible and predictable**.
+
+#### Visual Timeline
+
+**Where**: Plan → Today (appears when you have planned activities)
+
+**What it shows**:
+- **Horizontal timeline** split into morning/afternoon/evening
+- **Current time indicator** (red line) shows exactly where you are in the day
+- **Activity blocks** sized by duration
+- **Color-coded by category** (quick visual scan)
+- **Spoon costs** shown on each activity
+
+**Why it helps**:
+- **Spatial representation of time**: Instead of "3pm" (abstract), you see where 3pm sits in your day (concrete)
+- **Whole-day view**: Reduces anxiety from not knowing what's coming
+- **Proportional sizing**: A 10-minute task looks smaller than a 2-hour task (matches reality)
+- **Current moment visible**: "Where am I in my day?" is answered at a glance
+
+**How to use it**:
+- **Morning**: Look at timeline to understand your whole day
+- **Midday**: Check timeline to see what's ahead
+- **Anytime**: If feeling lost, check the red line to see where you are
+
+#### Transition Countdown
+
+**Why transitions are hard**: Your brain needs time to disengage from current activity and prepare for the next. Sudden transitions (even expected ones) cause jarring cognitive shifts. Advance warning allows mental preparation.
+
+**What it does**:
+- **15 minutes before time block ends**, shows gentle warning:
+  - "Morning ends in 15 minutes"
+  - "Next: Shower" (if afternoon activities exist)
+- **Dismissible**: You can close it if you don't need the warning right now
+- **Soft visual design**: Gentle amber gradient, slow pulse animation - not alarming
+
+**Why 15 minutes**: Research on autistic transition needs suggests 10-15 minutes is optimal for mental preparation. Not so far in advance that you forget, not so close that there's no time to prepare.
+
+**Why dismissible**: Some days transitions are fine. Some days you're hyperfocused and the warning is unwanted. User control is essential.
+
+**How to use it**:
+- When warning appears, **mentally prepare** for the upcoming shift
+- Finish current thought/activity
+- 15 minutes is enough time to reach a stopping point
+
+#### Routine Templates
+
+**Why templates exist**: Creating a daily plan from scratch requires executive function. On low-executive-function days, this barrier prevents planning entirely. Then the day is unstructured, which increases anxiety. Templates bypass the creation barrier.
+
+**Pre-built templates**:
+- **Weekday Routine**: Productive structure (exercise, work blocks, meals, relaxation)
+- **Weekend Routine**: Relaxed pace (sleep in, hobbies, light housework, leisure)
+- **Low Energy Day**: Gentle tasks only (basic hygiene, rest, easy meal, comfort activities)
+
+**How to use a template**:
+1. Go to **Plan → Templates**
+2. Click template name to preview activities
+3. Click **Apply to Today**
+4. Activities populate your planner instantly
+5. Edit/remove activities as needed
+
+**Why each template exists**:
+- **Weekday**: Structure for typical work/productive days without planning from scratch
+- **Weekend**: Permission to relax while still having gentle structure
+- **Low Energy Day**: Pre-designed for minimal spoons - everything is 1-3 spoons
+
+**Creating your own templates**:
+1. Plan a day that worked well
+2. Go to **Plan → Templates**
+3. Click **Save Today as Template**
+4. Name it (e.g., "Tuesday Therapy Day", "Recovery Day")
+5. Reuse anytime
+
+**Why save your own**: Your needs are unique. A template that matches your Wednesday schedule, or your post-social-event recovery pattern, is valuable to capture and reuse.
+
+---
+
+### Special Interests Tracking
+
+**Why this exists**: Mainstream productivity culture treats special interests as "distractions" or "procrastination." Time spent on special interests is framed as wasted, something to minimize.
+
+**This is wrong.** For autistic individuals, special interests serve critical functions:
+- **Regulation**: Reduces stress, restores calm
+- **Recovery**: Recharges energy after demanding tasks
+- **Joy**: Provides reliable positive experiences
+- **Competence**: Area of mastery and confidence
+- **Connection**: With community or subject matter
+
+This feature **validates special interest time** as valuable and tracks its **positive impact** on mood and energy.
+
+#### The Philosophy: "Time Well Spent"
+
+**Key framing**:
+- ✅ **No guilt**: Time tracking is positive, not punitive
+- ✅ **Impact tracking**: See how interests improve your mood
+- ✅ **Validation**: Your interests matter and help you function
+- ❌ **No limits**: App never says "you've spent too long on this"
+- ❌ **No shame**: Neutral, factual language only
+
+**Why this matters**: If you've been told your interests are "obsessions" or "wastes of time," this feature provides counter-evidence. "When I spend time on [interest], my mood improves by 2 points on average" is objective data.
+
+#### Adding a Special Interest
+
+**When to add**:
+- You have a topic/activity you return to regularly
+- It brings you joy, calm, or fascination
+- You'd like to track how it affects you
+
+**How to add**:
+1. Go to **Track → Interests**
+2. Click **+ Add New Interest**
+3. Enter **name** (e.g., "Model trains", "Medieval history", "Photography")
+4. Choose **category**:
+   - STEM (science, tech, engineering, math)
+   - Creative (art, music, writing, crafts)
+   - Collection (organizing, cataloging items)
+   - Media (shows, movies, books, podcasts)
+   - Gaming (video games, board games)
+   - Nature (animals, plants, outdoors)
+   - History (historical topics, culture)
+   - Language (languages, linguistics)
+   - Other
+5. Optional: **Description** - what you love about it
+6. **Save**
+
+**Why categories exist**: To see patterns. Maybe all your STEM interests improve mood more than media interests. Or vice versa. Data shows what works for you.
+
+#### Logging Interest Sessions
+
+**When to log**:
+- After engaging with your interest (any duration)
+- Real-time (start a session, log when done)
+- End of day (reflect on time spent)
+
+**How to log**:
+1. Go to **Track → Interests**
+2. Select your interest
+3. Click **Log Session**
+4. Enter **duration** (5-300 minutes)
+5. Select **session type**:
+   - **Research**: Reading, learning, watching videos about it
+   - **Creating**: Making something related to the interest
+   - **Consuming**: Enjoying content (watching, playing, reading)
+   - **Organizing**: Cataloging, sorting, arranging related items
+   - **Discussing**: Forums, communities, talking about it with others
+   - **Practicing**: Skill development, hands-on practice
+   - **Other**
+6. Optional: **Mood/energy before and after** (to track impact)
+7. Optional: **Notes** (what you did, what you learned)
+8. **Save**
+
+**Why track session type**: Different engagement modes might have different effects. Creating might be more energizing than consuming. Or vice versa for you. Data reveals patterns.
+
+**Why mood/energy tracking is optional**: Some sessions you just want to log the fact that you did it. Other times you want to measure impact. Your choice.
+
+#### Viewing Interest Impact
+
+**Where**: Track → Interests (each interest card shows stats)
+
+**What you see**:
+- **Total sessions**: How many times you've engaged
+- **Total time**: Hours spent (calculated from session durations)
+- **Average mood impact**: Average change in mood (before→after)
+  - "+1.5 avg mood" means this interest improves mood by 1.5 points on average
+- **Sessions by type**: Breakdown of how you engage most often
+
+**Why this data matters**:
+- **Validation**: Objective evidence that your interest helps you
+- **Permission**: On a hard day, seeing "+2.0 avg mood" gives permission to engage
+- **Patterns**: Maybe creating sessions improve mood more than consuming sessions
+- **Healthcare**: Share with therapist: "Here's data showing what regulates me"
+
+**Example interpretation**:
+- Interest: Photography
+- Sessions: 24
+- Total time: 36 hours
+- Avg mood impact: +1.8
+- Most common type: Creating
+
+**What this tells you**: Photography sessions almost always improve your mood. Time spent taking/editing photos is recovery time, not wasted time. You engage most through creating (vs just looking at others' photos). This is valuable data about what works for you.
 
 ---
 

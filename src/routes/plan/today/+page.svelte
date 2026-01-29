@@ -1,9 +1,13 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 	import { format } from 'date-fns';
-	import type { ActivityLibraryItem, TimeBlock } from '$lib/db/types';
+	import type { ActivityLibraryItem, TimeBlock, PlannedActivity } from '$lib/db/types';
+	import { db } from '$lib/db';
 	import ActivityPlanner from '$lib/components/activities/ActivityPlanner.svelte';
 	import ActivityLibrary from '$lib/components/activities/ActivityLibrary.svelte';
+	import RoutineTimeline from '$lib/components/routines/RoutineTimeline.svelte';
+	import TransitionCountdown from '$lib/components/routines/TransitionCountdown.svelte';
 
 	// Today's date
 	const today = new Date();
@@ -13,6 +17,19 @@
 	let showLibrary = $state(false);
 	let selectedTimeBlock = $state<TimeBlock>('morning');
 	let plannerRef = $state<ActivityPlanner | null>(null);
+	let plannedActivities = $state<PlannedActivity[]>([]);
+
+	// Load activities for timeline
+	onMount(async () => {
+		await loadActivities();
+	});
+
+	async function loadActivities() {
+		plannedActivities = await db.plannedActivities
+			.where('date')
+			.equals(todayStr)
+			.toArray();
+	}
 
 	// Open library for a specific time block
 	function handleOpenLibrary(timeBlock: TimeBlock) {
@@ -21,11 +38,18 @@
 	}
 
 	// Add activity from library to planner
-	function handleActivitySelected(item: ActivityLibraryItem, timeBlock: TimeBlock) {
+	async function handleActivitySelected(item: ActivityLibraryItem, timeBlock: TimeBlock) {
 		if (plannerRef) {
 			plannerRef.addActivityFromLibrary(item, timeBlock);
 		}
 		showLibrary = false;
+		// Reload activities for timeline
+		await loadActivities();
+	}
+
+	// Refresh activities when planner changes
+	async function handlePlannerChange() {
+		await loadActivities();
 	}
 </script>
 
@@ -50,6 +74,16 @@
 			<p class="text-gray-500">{format(today, 'EEEE, MMMM d')}</p>
 		</div>
 	</header>
+
+	<!-- Transition Warning -->
+	{#if plannedActivities.length > 0}
+		<TransitionCountdown activities={plannedActivities} warningMinutes={15} />
+	{/if}
+
+	<!-- Visual Timeline -->
+	{#if plannedActivities.length > 0}
+		<RoutineTimeline activities={plannedActivities} />
+	{/if}
 
 	<!-- Activity Planner -->
 	<ActivityPlanner

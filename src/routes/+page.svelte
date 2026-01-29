@@ -5,6 +5,7 @@
 	import { format } from 'date-fns';
 	import { db, getTodaysMoodLogs } from '$lib/db';
 	import type { MoodLog, BPReading, PlannedActivity } from '$lib/db/types';
+	import SpoonsWidget from '$lib/components/energy/SpoonsWidget.svelte';
 
 	// Get current date info
 	const today = new Date();
@@ -268,10 +269,14 @@
 					</div>
 				</div>
 			</div>
-		{:else if hasEntries}
+		{:else}
 			<div class="space-y-3">
-				<!-- Latest Mood -->
-				{#if latestMood}
+				<!-- Energy/Spoons Widget -->
+				<SpoonsWidget />
+
+				{#if hasEntries}
+					<!-- Latest Mood -->
+					{#if latestMood}
 					<div class="card p-4">
 						<div class="flex items-center gap-4">
 							<div class="w-10 h-10 rounded-full bg-success-100 flex items-center justify-center">
@@ -354,16 +359,17 @@
 						{/if}
 					</div>
 				{/if}
-			</div>
-		{:else}
-			<div class="card p-4">
-				<p class="text-gray-600 text-center py-2">
-					Start tracking to see your daily summary here.
-				</p>
-				<div class="flex justify-center gap-2 mt-3">
-					<a href="{base}/track/mood" class="btn-secondary text-sm py-2 px-4">Log Mood</a>
-					<a href="{base}/track/bp" class="btn-secondary text-sm py-2 px-4">Log BP</a>
-				</div>
+				{:else}
+					<div class="card p-4">
+						<p class="text-gray-600 text-center py-2">
+							Start tracking to see your daily summary here.
+						</p>
+						<div class="flex justify-center gap-2 mt-3">
+							<a href="{base}/track/mood" class="btn-secondary text-sm py-2 px-4">Log Mood</a>
+							<a href="{base}/track/bp" class="btn-secondary text-sm py-2 px-4">Log BP</a>
+						</div>
+					</div>
+				{/if}
 			</div>
 		{/if}
 	</section>

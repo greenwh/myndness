@@ -114,6 +114,12 @@
 		<p class="text-gray-600">Schedule activities that bring you joy and accomplishment.</p>
 	</header>
 
+	<!-- Quick Access -->
+	<div class="flex gap-3">
+		<a href="{base}/plan/today" class="btn-primary flex-1">Today's Plan</a>
+		<a href="{base}/plan/templates" class="btn-secondary flex-1">Templates</a>
+	</div>
+
 	{#if isLoading}
 		<div class="space-y-4">
 			{#each [1, 2, 3] as _}
