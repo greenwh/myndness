@@ -205,7 +205,7 @@
 		padding: 0.5rem;
 		display: flex;
 		align-items: center;
-		justify-between;
+		justify-content: space-between;
 		gap: 0.5rem;
 		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 		transition: all 0.2s;
